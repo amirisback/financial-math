@@ -6,6 +6,7 @@ import { i18n } from "@/i18n/config";
 import { generatePageSeo, generateOrganizationJsonLd } from "@/lib/seo";
 import "../globals.css";
 import { ThemeProvider } from "./_components/theme-provider";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -87,7 +88,9 @@ export default async function LangLayout({
           }}
         />
         {/* Initial Theme Script to avoid flash */}
-        <script
+        <Script
+          id="theme-initializer"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
