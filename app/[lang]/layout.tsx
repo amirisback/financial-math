@@ -5,6 +5,7 @@ import { getDictionary, hasLocale } from "./dictionaries";
 import { i18n } from "@/i18n/config";
 import { generatePageSeo, generateOrganizationJsonLd } from "@/lib/seo";
 import "../globals.css";
+import { ThemeProvider } from "./_components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -75,6 +76,7 @@ export default async function LangLayout({
     <html
       lang={lang}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
         {/* JSON-LD Structured Data — Organization */}
@@ -84,8 +86,29 @@ export default async function LangLayout({
             __html: JSON.stringify(organizationJsonLd),
           }}
         />
+        {/* Initial Theme Script to avoid flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const theme = localStorage.getItem('theme');
+                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.classList.remove('light');
+                  } else {
+                    document.documentElement.classList.add('light');
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })()
+            `,
+          }}
+        />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -8,18 +8,11 @@ Bertindak sebagai **Senior Frontend Engineer** yang expert di:
 
 **WAJIB baca `GUIDELINE.md` dan `AGENTS.md` sebelum menulis kode.**
 
-**Objective:** Membangun website **Warung Kopi Nusantara** — Landing page kedai kopi artisan dengan online ordering.
+**Objective:** Membangun website **Life Calculator Financial** — Kalkulator bisnis.
 
 ## 🧠 Context & 📋 Requirements
 
 - prompt_ai\requirement.md
-
-**Desain:**
-
-- Style: Modern minimalis, warm tones
-- Colors: Deep brown (#3C2415), Cream (#F5E6D3), Gold accent (#D4A574)
-- Font: Geist (sudah setup)
-- Dark mode wajib
 
 ## 📂 Output Structure
 
@@ -93,15 +86,11 @@ app/
 **Output:** Code lengkap TypeScript, production-ready, Bahasa Indonesia.
 
 - **Bahasa:** [Indonesia / English]
-- **Code:** Lengkap, production-ready, siap dijalankan (`npm run dev`)
+- **Code:** Lengkap, production-ready, siap dijalankan (`bun run dev`)
 - **Penjelasan:** Singkat — fokus di keputusan arsitektur, bukan narasi panjang
 - **Urutan pengerjaan:**
   1. Setup design system di `globals.css` (colors, fonts, tokens)
   2. Buat shared components (`header`, `footer`, `button`, dll)
   3. Buat halaman satu per satu
   4. Polish: animasi, transitions, responsive check
-  5. Pastikan `npm run build` sukses tanpa error
-
-### Phase
-
-- Buatkan Atomic Phase untuk proses pengerjaan website ini, simpan dalam bentuk .md di prompt_ai\plan
+  5. Pastikan `bun run build` sukses tanpa error
