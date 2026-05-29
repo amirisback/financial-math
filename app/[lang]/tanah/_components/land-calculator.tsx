@@ -24,6 +24,13 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
   const [interestRate, setInterestRate] = useState<number>(8);
   const [tenor, setTenor] = useState<number>(10);
 
+  // State Baru untuk POV Lanjutan & Analisis Keuntungan
+  const [sellerInitialPrice, setSellerInitialPrice] = useState<number>(150000000);
+  const [yearsHeld, setYearsHeld] = useState<number>(5);
+  const [marketPricePerM2, setMarketPricePerM2] = useState<number>(3500000);
+  const [totalMarketPriceKesepakatan, setTotalMarketPriceKesepakatan] = useState<number>(350000000);
+  const [activeTab, setActiveTab] = useState<"buyer" | "seller" | "analysis">("buyer");
+
   // Format IDR Helper
   const formatIDR = (num: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -84,6 +91,26 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
   // Rekomendasi Gaji Minimum
   const minIncome = installment * 3;
 
+  // RUMUS BARU POV & INVESTASI
+  const totalMarketPrice = inputMethod === "area" ? area * marketPricePerM2 : totalMarketPriceKesepakatan;
+  
+  // Total Cost Pembeli (Total modal riil: Uang Muka/Harga Properti + Semua Biaya Tambahan)
+  const totalAcquisitionCost = statusPembeli === "cash"
+    ? cashRequiredPembeli
+    : cashRequiredPembeli + plafon;
+
+  // Keuntungan Kertas Pembeli (Valuation Benefit) terhadap estimasi harga pasar wajar
+  const valuationBenefit = totalMarketPrice - totalAcquisitionCost;
+
+  // Laba Bersih Penjual (Capital Gain) setelah potongan biaya transaksi penjual
+  const capitalGain = uangBersihPenjual - sellerInitialPrice;
+  const roi = sellerInitialPrice > 0 ? (capitalGain / sellerInitialPrice) * 100 : 0;
+  
+  // CAGR (Compound Annual Growth Rate) - Laju pertumbuhan rata-rata tahunan disetahunkan
+  const cagr = sellerInitialPrice > 0 && yearsHeld > 0
+    ? (Math.pow(uangBersihPenjual / sellerInitialPrice, 1 / yearsHeld) - 1) * 100
+    : 0;
+
   return (
     <div className="mx-auto max-w-6xl">
       <div className="mb-8">
@@ -141,16 +168,27 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                     {area} m²
                   </span>
                 </div>
-                <input
-                  id="area-input"
-                  type="range"
-                  min="20"
-                  max="10000"
-                  step="10"
-                  value={area}
-                  onChange={(e) => setArea(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="area-input"
+                    type="range"
+                    min="20"
+                    max="10000"
+                    step="10"
+                    value={area}
+                    onChange={(e) => setArea(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="20"
+                    max="10000"
+                    step="10"
+                    value={area}
+                    onChange={(e) => setArea(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
               </div>
 
               {inputMethod === "area" ? (
@@ -164,16 +202,27 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                       {formatIDR(pricePerM2)} / m²
                     </span>
                   </div>
-                  <input
-                    id="price-per-m2"
-                    type="range"
-                    min="200000"
-                    max="50000000"
-                    step="100000"
-                    value={pricePerM2}
-                    onChange={(e) => setPricePerM2(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                  />
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <input
+                      id="price-per-m2"
+                      type="range"
+                      min="200000"
+                      max="50000000"
+                      step="100000"
+                      value={pricePerM2}
+                      onChange={(e) => setPricePerM2(Number(e.target.value))}
+                      className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    />
+                    <input
+                      type="number"
+                      min="200000"
+                      max="50000000"
+                      step="100000"
+                      value={pricePerM2}
+                      onChange={(e) => setPricePerM2(Number(e.target.value))}
+                      className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    />
+                  </div>
                 </div>
               ) : (
                 /* Total Negotiated Price Input */
@@ -186,16 +235,27 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                       {formatIDR(totalPriceKesepakatan)}
                     </span>
                   </div>
-                  <input
-                    id="total-price"
-                    type="range"
-                    min="10000000"
-                    max="10000000000"
-                    step="10000000"
-                    value={totalPriceKesepakatan}
-                    onChange={(e) => setTotalPriceKesepakatan(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                  />
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <input
+                      id="total-price"
+                      type="range"
+                      min="10000000"
+                      max="10000000000"
+                      step="10000000"
+                      value={totalPriceKesepakatan}
+                      onChange={(e) => setTotalPriceKesepakatan(Number(e.target.value))}
+                      className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    />
+                    <input
+                      type="number"
+                      min="10000000"
+                      max="10000000000"
+                      step="10000000"
+                      value={totalPriceKesepakatan}
+                      onChange={(e) => setTotalPriceKesepakatan(Number(e.target.value))}
+                      className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    />
+                  </div>
                 </div>
               )}
 
@@ -209,16 +269,27 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                     {formatIDR(njopPerM2)} / m²
                   </span>
                 </div>
-                <input
-                  id="njop-input"
-                  type="range"
-                  min="100000"
-                  max="40000000"
-                  step="100000"
-                  value={njopPerM2}
-                  onChange={(e) => setNjopPerM2(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="njop-input"
+                    type="range"
+                    min="100000"
+                    max="40000000"
+                    step="100000"
+                    value={njopPerM2}
+                    onChange={(e) => setNjopPerM2(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="100000"
+                    max="40000000"
+                    step="100000"
+                    value={njopPerM2}
+                    onChange={(e) => setNjopPerM2(Number(e.target.value))}
+                    className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
               </div>
 
               {/* NPTKP and Incentive */}
@@ -335,6 +406,165 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
             </CardContent>
           </Card>
 
+          {/* Card Input Baru: Analisis Perspektif & Nilai Pasar (POV) */}
+          <Card className="border border-card-border bg-card-bg">
+            <CardContent className="flex flex-col gap-6 pt-6">
+              <h3 className="text-base font-bold text-foreground flex items-center gap-2 border-b border-card-border/50 pb-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="h-5 w-5 text-indigo-500"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.656 48.656 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3M3 12a9 9 0 1 1 18 0a9 9 0 0 1-18 0Zm0 0c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7c2.44.17 4.884.17 7.324 0a4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M3 12l-3 3m3-3 3 3"
+                  />
+                </svg>
+                <span>{dict.tanah.povAnalysis}</span>
+              </h3>
+
+              {/* Seller Acquisition Price */}
+              <div className="flex flex-col gap-2">
+                <div className="flex justify-between items-center">
+                  <label htmlFor="seller-initial-price" className="text-sm font-semibold text-foreground flex flex-col">
+                    <span>{dict.tanah.sellerInitialPrice}</span>
+                    <span className="text-[10px] font-normal text-zinc-400">{dict.tanah.sellerInitialPriceHelp}</span>
+                  </label>
+                  <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
+                    {formatIDR(sellerInitialPrice)}
+                  </span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="seller-initial-price"
+                    type="range"
+                    min="10000000"
+                    max="5000000000"
+                    step="10000000"
+                    value={sellerInitialPrice}
+                    onChange={(e) => setSellerInitialPrice(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="10000000"
+                    max="5000000000"
+                    step="10000000"
+                    value={sellerInitialPrice}
+                    onChange={(e) => setSellerInitialPrice(Number(e.target.value))}
+                    className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Years Held */}
+              <div className="flex flex-col gap-2">
+                <div className="flex justify-between items-center">
+                  <label htmlFor="years-held" className="text-sm font-semibold text-foreground">
+                    {dict.tanah.yearsHeld}
+                  </label>
+                  <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
+                    {yearsHeld} {dict.tanah.tenor.includes("Years") ? "Years" : "Tahun"}
+                  </span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="years-held"
+                    type="range"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value={yearsHeld}
+                    onChange={(e) => setYearsHeld(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value={yearsHeld}
+                    onChange={(e) => setYearsHeld(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Market Price */}
+              {inputMethod === "area" ? (
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between items-center">
+                    <label htmlFor="market-price-per-m2" className="text-sm font-semibold text-foreground flex flex-col">
+                      <span>{dict.tanah.marketPricePerM2}</span>
+                      <span className="text-[10px] font-normal text-zinc-400">{dict.tanah.marketPriceHelp}</span>
+                    </label>
+                    <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
+                      {formatIDR(marketPricePerM2)} / m²
+                    </span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <input
+                      id="market-price-per-m2"
+                      type="range"
+                      min="200000"
+                      max="50000000"
+                      step="100000"
+                      value={marketPricePerM2}
+                      onChange={(e) => setMarketPricePerM2(Number(e.target.value))}
+                      className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    />
+                    <input
+                      type="number"
+                      min="200000"
+                      max="50000000"
+                      step="100000"
+                      value={marketPricePerM2}
+                      onChange={(e) => setMarketPricePerM2(Number(e.target.value))}
+                      className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between items-center">
+                    <label htmlFor="total-market-price" className="text-sm font-semibold text-foreground flex flex-col">
+                      <span>{dict.tanah.totalMarketPrice}</span>
+                      <span className="text-[10px] font-normal text-zinc-400">{dict.tanah.marketPriceHelp}</span>
+                    </label>
+                    <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
+                      {formatIDR(totalMarketPriceKesepakatan)}
+                    </span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <input
+                      id="total-market-price"
+                      type="range"
+                      min="10000000"
+                      max="10000000000"
+                      step="10000000"
+                      value={totalMarketPriceKesepakatan}
+                      onChange={(e) => setTotalMarketPriceKesepakatan(Number(e.target.value))}
+                      className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    />
+                    <input
+                      type="number"
+                      min="10000000"
+                      max="10000000000"
+                      step="10000000"
+                      value={totalMarketPriceKesepakatan}
+                      onChange={(e) => setTotalMarketPriceKesepakatan(Number(e.target.value))}
+                      className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    />
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
           {/* Do's & Don'ts Panel */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="p-5 rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.03] dark:bg-emerald-500/[0.05] flex flex-col gap-3">
@@ -389,83 +619,420 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
 
         {/* Results Panel (Right/5cols) */}
         <div className="lg:col-span-5 flex flex-col gap-6 sticky top-24">
-          <Card className="border border-card-border bg-card-bg shadow-lg glass-panel-glow">
-            <CardContent className="flex flex-col gap-6 pt-6">
-              {/* SISI PENJUAL */}
-              <div className="flex flex-col gap-4 border-b border-card-border/50 pb-4">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
-                  {dict.tanah.sellerSide}
-                </h3>
-                <div className="flex flex-col gap-2.5">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-zinc-500">{dict.tanah.pph}</span>
-                    <span className="text-xs font-semibold text-rose-500">-{formatIDR(pphFinal)}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-zinc-500">
-                      {dict.tanah.notaris} <span className="text-[9px] text-zinc-400">{dict.tanah.notarisDesc}</span>
-                    </span>
-                    <span className="text-xs font-semibold text-rose-500">-{formatIDR(AJBBagi)}</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 mt-1">
-                    <span className="text-xs font-bold text-foreground">{dict.tanah.netReceived}</span>
-                    <span className="text-base font-extrabold text-emerald-500">{formatIDR(uangBersihPenjual)}</span>
-                  </div>
-                </div>
-              </div>
+          <Card className="border border-card-border bg-card-bg shadow-lg glass-panel-glow overflow-hidden">
+            {/* Tabs Header */}
+            <div className="flex border-b border-card-border/50 bg-black/[0.01] dark:bg-white/[0.01]">
+              <button
+                type="button"
+                onClick={() => setActiveTab("buyer")}
+                className={`flex-1 py-3.5 text-xs font-bold text-center border-b-2 transition-all duration-200 cursor-pointer ${
+                  activeTab === "buyer"
+                    ? "border-indigo-500 text-indigo-600 dark:text-indigo-400 bg-white/[0.02]"
+                    : "border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                }`}
+              >
+                {dict.tanah.tabBuyer}
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("seller")}
+                className={`flex-1 py-3.5 text-xs font-bold text-center border-b-2 transition-all duration-200 cursor-pointer ${
+                  activeTab === "seller"
+                    ? "border-emerald-500 text-emerald-600 dark:text-emerald-400 bg-white/[0.02]"
+                    : "border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                }`}
+              >
+                {dict.tanah.tabSeller}
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("analysis")}
+                className={`flex-1 py-3.5 text-xs font-bold text-center border-b-2 transition-all duration-200 cursor-pointer ${
+                  activeTab === "analysis"
+                    ? "border-amber-500 text-amber-600 dark:text-amber-400 bg-white/[0.02]"
+                    : "border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                }`}
+              >
+                {dict.tanah.tabAnalysis}
+              </button>
+            </div>
 
-              {/* SISI PEMBELI */}
-              <div className="flex flex-col gap-4">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
-                  {dict.tanah.buyerSide}
-                </h3>
-                <div className="flex flex-col gap-2.5">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-zinc-500">Pajak BPHTB</span>
-                    <span className="text-xs font-semibold text-rose-500">{formatIDR(bphtb)}</span>
+            <CardContent className="flex flex-col gap-6 pt-6">
+              {/* TAB 1: POV PEMBELI */}
+              {activeTab === "buyer" && (
+                <div className="flex flex-col gap-5 animate-in fade-in duration-200">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
+                      {dict.tanah.buyerAnalysisTitle}
+                    </h3>
+                    <p className="text-xs text-zinc-500">
+                      {dict.tanah.buyerSide}
+                    </p>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-zinc-500">AJB Notaris</span>
-                    <span className="text-xs font-semibold text-rose-500">{formatIDR(AJBBagi)}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-zinc-500">BBN PPAT Paket</span>
-                    <span className="text-xs font-semibold text-rose-500">{formatIDR(bbnResmi)}</span>
-                  </div>
-                  {statusPembeli === "kpr" && (
-                    <div className="flex flex-col gap-2 border-t border-dashed border-card-border/50 pt-2.5 my-1">
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-zinc-500">{dict.tanah.plafon}</span>
-                        <span className="text-xs font-semibold">{formatIDR(plafon)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-zinc-500">Biaya KPR Bank</span>
-                        <span className="text-xs font-semibold text-rose-500">{formatIDR(bankFees)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-zinc-500">{dict.tanah.installment}</span>
-                        <span className="text-sm font-bold text-primary">{formatIDR(installment)} / bln</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="flex flex-col">
-                          <span className="text-[10px] text-zinc-500">{dict.tanah.ratio}</span>
-                          <span className="text-[9px] text-zinc-400">{dict.tanah.ratioDesc}</span>
+
+                  <div className="flex flex-col gap-2.5">
+                    {/* Basic Price */}
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-zinc-500">{dict.tanah.totalPrice}</span>
+                      <span className="font-semibold text-foreground">{formatIDR(totalPrice)}</span>
+                    </div>
+
+                    {/* Taxes and Fees */}
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-zinc-500">{dict.tanah.bphtb}</span>
+                      <span className="font-semibold text-rose-500">+{formatIDR(bphtb)}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-zinc-500">AJB PPAT Notaris (0.5%)</span>
+                      <span className="font-semibold text-rose-500">+{formatIDR(AJBBagi)}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-zinc-500">{dict.tanah.bbn}</span>
+                      <span className="font-semibold text-rose-500">+{formatIDR(bbnResmi)}</span>
+                    </div>
+
+                    {statusPembeli === "kpr" && (
+                      <div className="flex flex-col gap-2 border-t border-dashed border-card-border/50 pt-2.5 my-1">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-zinc-500">{dict.tanah.plafon}</span>
+                          <span className="font-semibold text-foreground">{formatIDR(plafon)}</span>
                         </div>
-                        <span className="text-xs font-semibold text-amber-500 bg-amber-500/5 px-2 py-0.5 rounded border border-amber-500/10">
-                          {formatIDR(minIncome)}
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-zinc-500">Biaya Admin & Provisi KPR</span>
+                          <span className="font-semibold text-rose-500">+{formatIDR(bankFees)}</span>
+                        </div>
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-zinc-500">{dict.tanah.installment}</span>
+                          <span className="font-bold text-indigo-500">{formatIDR(installment)} / bln</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <div className="flex flex-col">
+                            <span className="text-[10px] text-zinc-500">{dict.tanah.ratio}</span>
+                            <span className="text-[9px] text-zinc-400">{dict.tanah.ratioDesc}</span>
+                          </div>
+                          <span className="text-xs font-semibold text-amber-500 bg-amber-500/5 px-2 py-0.5 rounded border border-amber-500/10">
+                            {formatIDR(minIncome)}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Total acquisition cost card */}
+                    <div className="flex justify-between items-center p-3.5 rounded-xl bg-zinc-500/[0.03] dark:bg-white/[0.02] border border-card-border mt-1">
+                      <div className="flex flex-col">
+                        <span className="text-xs font-bold text-foreground">{dict.tanah.totalAcquisitionCost}</span>
+                        <span className="text-[9px] text-zinc-400">{dict.tanah.totalAcquisitionCostDesc}</span>
+                      </div>
+                      <span className="text-sm font-extrabold text-foreground">{formatIDR(totalAcquisitionCost)}</span>
+                    </div>
+
+                    {/* Upfront Cash required */}
+                    <div className="flex justify-between items-center p-3.5 rounded-xl bg-indigo-500/5 border border-indigo-500/10 mt-1">
+                      <div className="flex flex-col">
+                        <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{dict.tanah.cashRequired}</span>
+                        <span className="text-[9px] text-zinc-400">{dict.tanah.cashRequiredDesc}</span>
+                      </div>
+                      <span className="text-base font-extrabold text-indigo-600 dark:text-indigo-400">{formatIDR(cashRequiredPembeli)}</span>
+                    </div>
+
+                    {/* Valuation status */}
+                    <div className="flex flex-col gap-2 border-t border-card-border/50 pt-3.5 mt-2">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-zinc-500">{dict.tanah.valuationStatus}</span>
+                        <span className={`px-2.5 py-0.5 rounded-full font-bold text-[10px] border ${
+                          valuationBenefit >= 0
+                            ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
+                            : "bg-rose-500/10 text-rose-500 border-rose-500/20"
+                        }`}>
+                          {valuationBenefit >= 0 ? dict.tanah.belowMarket : dict.tanah.aboveMarket}
+                        </span>
+                      </div>
+                      <div className={`flex justify-between items-center p-3 rounded-xl border ${
+                        valuationBenefit >= 0
+                          ? "bg-emerald-500/[0.03] border-emerald-500/10"
+                          : "bg-rose-500/[0.03] border-rose-500/10"
+                      }`}>
+                        <span className="text-xs font-semibold text-zinc-500">
+                          {valuationBenefit >= 0 ? dict.tanah.valuationBenefit : dict.tanah.valuationLoss}
+                        </span>
+                        <span className={`text-sm font-bold ${
+                          valuationBenefit >= 0 ? "text-emerald-500" : "text-rose-500"
+                        }`}>
+                          {valuationBenefit >= 0 ? "" : "-"}{formatIDR(Math.abs(valuationBenefit))}
                         </span>
                       </div>
                     </div>
-                  )}
-                  <div className="flex justify-between items-center p-3.5 rounded-xl bg-indigo-500/5 border border-indigo-500/10 mt-1">
-                    <div className="flex flex-col">
-                      <span className="text-xs font-bold text-foreground">{dict.tanah.cashRequired}</span>
-                      <span className="text-[9px] text-zinc-400">{dict.tanah.cashRequiredDesc}</span>
-                    </div>
-                    <span className="text-base font-extrabold text-indigo-500">{formatIDR(cashRequiredPembeli)}</span>
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* TAB 2: POV PENJUAL */}
+              {activeTab === "seller" && (
+                <div className="flex flex-col gap-5 animate-in fade-in duration-200">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
+                      {dict.tanah.sellerAnalysisTitle}
+                    </h3>
+                    <p className="text-xs text-zinc-500">
+                      {dict.tanah.sellerSide}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-2.5">
+                    {/* Basic Selling Price */}
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-zinc-500">{dict.tanah.totalPrice}</span>
+                      <span className="font-semibold text-foreground">{formatIDR(totalPrice)}</span>
+                    </div>
+
+                    {/* Deductions */}
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-zinc-500">{dict.tanah.pph}</span>
+                      <span className="font-semibold text-rose-500">-{formatIDR(pphFinal)}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-zinc-500">
+                        {dict.tanah.notaris} <span className="text-[9px] text-zinc-400">{dict.tanah.notarisDesc}</span>
+                      </span>
+                      <span className="font-semibold text-rose-500">-{formatIDR(AJBBagi)}</span>
+                    </div>
+
+                    {/* Net Cash Received */}
+                    <div className="flex justify-between items-center p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 mt-1">
+                      <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">{dict.tanah.netReceived}</span>
+                      <span className="text-base font-extrabold text-emerald-500">{formatIDR(uangBersihPenjual)}</span>
+                    </div>
+
+                    {/* Initial Price comparison */}
+                    <div className="flex flex-col gap-2 border-t border-card-border/50 pt-3.5 mt-2">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-zinc-500">{dict.tanah.sellerInitialPrice}</span>
+                        <span className="font-semibold text-foreground">{formatIDR(sellerInitialPrice)}</span>
+                      </div>
+                      
+                      {/* Capital Gain */}
+                      <div className={`flex justify-between items-center p-3 rounded-xl border ${
+                        capitalGain >= 0
+                          ? "bg-emerald-500/[0.03] border-emerald-500/10"
+                          : "bg-rose-500/[0.03] border-rose-500/10"
+                      }`}>
+                        <div className="flex flex-col">
+                          <span className="text-xs font-semibold text-zinc-500">{dict.tanah.capitalGain}</span>
+                          <span className="text-[9px] text-zinc-400">{dict.tanah.capitalGainDesc}</span>
+                        </div>
+                        <span className={`text-sm font-bold ${
+                          capitalGain >= 0 ? "text-emerald-500" : "text-rose-500"
+                        }`}>
+                          {capitalGain >= 0 ? "+" : ""}{formatIDR(capitalGain)}
+                        </span>
+                      </div>
+
+                      {/* ROI & CAGR Grid */}
+                      <div className="grid grid-cols-2 gap-3 mt-1">
+                        <div className="p-3 rounded-xl border border-card-border bg-black/[0.01] dark:bg-white/[0.01]">
+                          <span className="block text-[10px] text-zinc-400 font-semibold uppercase">{dict.tanah.roi}</span>
+                          <span className={`text-base font-extrabold block mt-0.5 ${
+                            capitalGain >= 0 ? "text-emerald-500" : "text-rose-500"
+                          }`}>
+                            {roi.toFixed(1)}%
+                          </span>
+                        </div>
+                        <div className="p-3 rounded-xl border border-card-border bg-black/[0.01] dark:bg-white/[0.01]">
+                          <div className="flex flex-col">
+                            <span className="text-[10px] text-zinc-400 font-semibold uppercase">{dict.tanah.cagr}</span>
+                            <span className="text-[8px] text-zinc-500 -mt-0.5">{dict.tanah.cagrDesc}</span>
+                          </div>
+                          <span className={`text-base font-extrabold block mt-0.5 ${
+                            capitalGain >= 0 ? "text-emerald-500" : "text-rose-500"
+                          }`}>
+                            {cagr.toFixed(1)}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: SIAPA UNTUNG? */}
+              {activeTab === "analysis" && (
+                <div className="flex flex-col gap-5 animate-in fade-in duration-200">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
+                      {dict.tanah.dealAnalyzerTitle}
+                    </h3>
+                    <p className="text-xs text-zinc-500">
+                      {dict.tanah.negotiationVerdict}
+                    </p>
+                  </div>
+
+                  {/* Negotiation Verdict Card */}
+                  {totalPrice < totalMarketPrice ? (
+                    <div className="p-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] flex flex-col gap-2">
+                      <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-sm">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-5 h-5 animate-bounce"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.13c1.434-1.25 3.8-1.25 5.233 0a.75.75 0 0 1-.99 1.13ZM9.75 11.25a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Zm0 3a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span>{dict.tanah.buyerAdvantage}</span>
+                      </div>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                        {dict.tanah.buyerAdvantageDesc}
+                      </p>
+                    </div>
+                  ) : totalPrice > totalMarketPrice ? (
+                    <div className="p-4 rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] flex flex-col gap-2">
+                      <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-sm">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-5 h-5 animate-bounce"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.13c1.434-1.25 3.8-1.25 5.233 0a.75.75 0 0 1-.99 1.13ZM9.75 11.25a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Zm0 3a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span>{dict.tanah.sellerAdvantage}</span>
+                      </div>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                        {dict.tanah.sellerAdvantageDesc}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="p-4 rounded-2xl border border-indigo-500/20 bg-indigo-500/[0.04] flex flex-col gap-2">
+                      <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-sm">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-5 h-5 animate-pulse"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.13c1.434-1.25 3.8-1.25 5.233 0a.75.75 0 0 1-.99 1.13ZM9.75 11.25a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Zm0 3a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span>{dict.tanah.fairDeal}</span>
+                      </div>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                        {dict.tanah.fairDealDesc}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Price comparison breakdown & bars */}
+                  <div className="flex flex-col gap-4 border-t border-card-border/50 pt-4">
+                    <h4 className="text-xs font-bold text-foreground">
+                      {dict.tanah.dealBalance}
+                    </h4>
+
+                    {/* Numeric comparison list */}
+                    <div className="flex flex-col gap-2.5">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-zinc-500 flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 bg-indigo-500 rounded-full inline-block"></span>
+                          {dict.tanah.dealPrice}
+                        </span>
+                        <span className="font-bold text-indigo-500">{formatIDR(totalPrice)}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-zinc-500 flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block"></span>
+                          {dict.tanah.marketVal}
+                        </span>
+                        <span className="font-bold text-emerald-500">{formatIDR(totalMarketPrice)}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-zinc-500 flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 bg-zinc-400 rounded-full inline-block"></span>
+                          {dict.tanah.njopVal} (NJOP)
+                        </span>
+                        <span className="font-bold text-zinc-500 dark:text-zinc-300">{formatIDR(totalNjop)}</span>
+                      </div>
+                    </div>
+
+                    {/* Visual bar chart comparing the three */}
+                    <div className="flex flex-col gap-3.5 bg-black/[0.01] dark:bg-white/[0.01] p-4 rounded-xl border border-card-border mt-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
+                        {dict.tanah.comparisonChart || "Grafik Komparasi"}
+                      </span>
+                      
+                      {/* Deal price relative to market price */}
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex justify-between text-[9px] font-bold text-zinc-400">
+                          <span>{dict.tanah.dealPrice}</span>
+                          <span>{((totalPrice / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100).toFixed(0)}%</span>
+                        </div>
+                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
+                          <div 
+                            className="bg-indigo-500 h-full rounded-full transition-all duration-500"
+                            style={{ width: `${(totalPrice / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      {/* Market price relative to max */}
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex justify-between text-[9px] font-bold text-zinc-400">
+                          <span>{dict.tanah.marketVal}</span>
+                          <span>{((totalMarketPrice / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100).toFixed(0)}%</span>
+                        </div>
+                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
+                          <div 
+                            className="bg-emerald-500 h-full rounded-full transition-all duration-500"
+                            style={{ width: `${(totalMarketPrice / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      {/* NJOP relative to max */}
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex justify-between text-[9px] font-bold text-zinc-400">
+                          <span>{dict.tanah.njopVal}</span>
+                          <span>{((totalNjop / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100).toFixed(0)}%</span>
+                        </div>
+                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
+                          <div 
+                            className="bg-zinc-400 h-full rounded-full transition-all duration-500"
+                            style={{ width: `${(totalNjop / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* NJOP tax calculation warning if transaction price is below NJOP */}
+                    {totalPrice < totalNjop && (
+                      <div className="p-3.5 rounded-xl border border-amber-500/20 bg-amber-500/[0.03] text-[10px] text-amber-600 dark:text-amber-400 leading-relaxed flex gap-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className="w-4 h-4 flex-shrink-0 mt-0.5"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span>{dict.tanah.njopWarning}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 

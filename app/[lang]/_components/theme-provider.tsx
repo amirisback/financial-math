@@ -18,9 +18,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Run on client mount to load theme
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const initialTheme = savedTheme || systemTheme;
+    let savedTheme: Theme | null = null;
+    try {
+      savedTheme = localStorage.getItem("theme") as Theme | null;
+    } catch (e) {
+      console.warn("Storage access denied: localStorage is disabled.", e);
+    }
+
+    const initialTheme = savedTheme || "light";
     
     setThemeState(initialTheme);
     
@@ -36,7 +41,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem("theme", newTheme);
+    try {
+      localStorage.setItem("theme", newTheme);
+    } catch (e) {
+      console.warn("Failed to write to localStorage:", e);
+    }
+    
     if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");

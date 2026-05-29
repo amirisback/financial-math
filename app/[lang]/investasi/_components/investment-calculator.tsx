@@ -110,16 +110,27 @@ export function InvestmentCalculator({ dict }: InvestmentCalculatorProps) {
                         {sahamLot} Lot
                       </span>
                     </div>
-                    <input
-                      id="saham-lot"
-                      type="range"
-                      min="1"
-                      max="1000"
-                      step="1"
-                      value={sahamLot}
-                      onChange={(e) => setSahamLot(Number(e.target.value))}
-                      className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                    />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <input
+                        id="saham-lot"
+                        type="range"
+                        min="1"
+                        max="1000"
+                        step="1"
+                        value={sahamLot}
+                        onChange={(e) => setSahamLot(Number(e.target.value))}
+                        className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                      />
+                      <input
+                        type="number"
+                        min="1"
+                        max="1000"
+                        step="1"
+                        value={sahamLot}
+                        onChange={(e) => setSahamLot(Number(e.target.value))}
+                        className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      />
+                    </div>
                   </div>
 
                   {/* Harga Lembar */}
@@ -132,16 +143,27 @@ export function InvestmentCalculator({ dict }: InvestmentCalculatorProps) {
                         {formatIDR(sahamPrice)}
                       </span>
                     </div>
-                    <input
-                      id="saham-price"
-                      type="range"
-                      min="50"
-                      max="150000"
-                      step="50"
-                      value={sahamPrice}
-                      onChange={(e) => setSahamPrice(Number(e.target.value))}
-                      className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                    />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <input
+                        id="saham-price"
+                        type="range"
+                        min="50"
+                        max="150000"
+                        step="50"
+                        value={sahamPrice}
+                        onChange={(e) => setSahamPrice(Number(e.target.value))}
+                        className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                      />
+                      <input
+                        type="number"
+                        min="50"
+                        max="150000"
+                        step="50"
+                        value={sahamPrice}
+                        onChange={(e) => setSahamPrice(Number(e.target.value))}
+                        className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      />
+                    </div>
                   </div>
 
                   {/* DPS Lembar */}
@@ -154,16 +176,27 @@ export function InvestmentCalculator({ dict }: InvestmentCalculatorProps) {
                         {formatIDR(sahamDps)}
                       </span>
                     </div>
-                    <input
-                      id="saham-dps"
-                      type="range"
-                      min="0"
-                      max="5000"
-                      step="5"
-                      value={sahamDps}
-                      onChange={(e) => setSahamDps(Number(e.target.value))}
-                      className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                    />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <input
+                        id="saham-dps"
+                        type="range"
+                        min="0"
+                        max="5000"
+                        step="5"
+                        value={sahamDps}
+                        onChange={(e) => setSahamDps(Number(e.target.value))}
+                        className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                      />
+                      <input
+                        type="number"
+                        min="0"
+                        max="5000"
+                        step="5"
+                        value={sahamDps}
+                        onChange={(e) => setSahamDps(Number(e.target.value))}
+                        className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      />
+                    </div>
                   </div>
 
                   {/* Broker Fees */}
@@ -245,16 +278,27 @@ export function InvestmentCalculator({ dict }: InvestmentCalculatorProps) {
                         {emasGram} Gram
                       </span>
                     </div>
-                    <input
-                      id="emas-gram"
-                      type="range"
-                      min="1"
-                      max="1000"
-                      step="1"
-                      value={emasGram}
-                      onChange={(e) => setEmasGram(Number(e.target.value))}
-                      className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                    />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <input
+                        id="emas-gram"
+                        type="range"
+                        min="1"
+                        max="1000"
+                        step="1"
+                        value={emasGram}
+                        onChange={(e) => setEmasGram(Number(e.target.value))}
+                        className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                      />
+                      <input
+                        type="number"
+                        min="1"
+                        max="1000"
+                        step="1"
+                        value={emasGram}
+                        onChange={(e) => setEmasGram(Number(e.target.value))}
+                        className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      />
+                    </div>
                   </div>
 
                   {/* Harga Beli Gram */}
@@ -267,16 +311,27 @@ export function InvestmentCalculator({ dict }: InvestmentCalculatorProps) {
                         {formatIDR(emasPriceBuy)} / Gram
                       </span>
                     </div>
-                    <input
-                      id="emas-price-buy"
-                      type="range"
-                      min="500000"
-                      max="2000000"
-                      step="10000"
-                      value={emasPriceBuy}
-                      onChange={(e) => setEmasPriceBuy(Number(e.target.value))}
-                      className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                    />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <input
+                        id="emas-price-buy"
+                        type="range"
+                        min="500000"
+                        max="2000000"
+                        step="10000"
+                        value={emasPriceBuy}
+                        onChange={(e) => setEmasPriceBuy(Number(e.target.value))}
+                        className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                      />
+                      <input
+                        type="number"
+                        min="500000"
+                        max="2000000"
+                        step="10000"
+                        value={emasPriceBuy}
+                        onChange={(e) => setEmasPriceBuy(Number(e.target.value))}
+                        className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      />
+                    </div>
                   </div>
 
                   {/* Harga Buyback */}
@@ -289,16 +344,27 @@ export function InvestmentCalculator({ dict }: InvestmentCalculatorProps) {
                         {formatIDR(emasPriceBack)} / Gram
                       </span>
                     </div>
-                    <input
-                      id="emas-price-back"
-                      type="range"
-                      min="500000"
-                      max="2000000"
-                      step="10000"
-                      value={emasPriceBack}
-                      onChange={(e) => setEmasPriceBack(Number(e.target.value))}
-                      className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                    />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <input
+                        id="emas-price-back"
+                        type="range"
+                        min="500000"
+                        max="2000000"
+                        step="10000"
+                        value={emasPriceBack}
+                        onChange={(e) => setEmasPriceBack(Number(e.target.value))}
+                        className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                      />
+                      <input
+                        type="number"
+                        min="500000"
+                        max="2000000"
+                        step="10000"
+                        value={emasPriceBack}
+                        onChange={(e) => setEmasPriceBack(Number(e.target.value))}
+                        className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      />
+                    </div>
                   </div>
                 </>
               )}
@@ -315,16 +381,27 @@ export function InvestmentCalculator({ dict }: InvestmentCalculatorProps) {
                         {formatIDR(sbnNominal)}
                       </span>
                     </div>
-                    <input
-                      id="sbn-nominal"
-                      type="range"
-                      min="1000000"
-                      max="1000000000"
-                      step="5000000"
-                      value={sbnNominal}
-                      onChange={(e) => setSbnNominal(Number(e.target.value))}
-                      className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                    />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <input
+                        id="sbn-nominal"
+                        type="range"
+                        min="1000000"
+                        max="1000000000"
+                        step="5000000"
+                        value={sbnNominal}
+                        onChange={(e) => setSbnNominal(Number(e.target.value))}
+                        className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                      />
+                      <input
+                        type="number"
+                        min="1000000"
+                        max="1000000000"
+                        step="5000000"
+                        value={sbnNominal}
+                        onChange={(e) => setSbnNominal(Number(e.target.value))}
+                        className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      />
+                    </div>
                   </div>
 
                   {/* Kupon Bunga */}
@@ -337,16 +414,27 @@ export function InvestmentCalculator({ dict }: InvestmentCalculatorProps) {
                         {sbnRate}%
                       </span>
                     </div>
-                    <input
-                      id="sbn-rate"
-                      type="range"
-                      min="1"
-                      max="15"
-                      step="0.1"
-                      value={sbnRate}
-                      onChange={(e) => setSbnRate(Number(e.target.value))}
-                      className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                    />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <input
+                        id="sbn-rate"
+                        type="range"
+                        min="1"
+                        max="15"
+                        step="0.1"
+                        value={sbnRate}
+                        onChange={(e) => setSbnRate(Number(e.target.value))}
+                        className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                      />
+                      <input
+                        type="number"
+                        min="1"
+                        max="15"
+                        step="0.1"
+                        value={sbnRate}
+                        onChange={(e) => setSbnRate(Number(e.target.value))}
+                        className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      />
+                    </div>
                   </div>
 
                   {/* SBN vs Deposito Type */}

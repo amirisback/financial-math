@@ -5,6 +5,7 @@ import { generatePageSeo } from "@/lib/seo";
 import { Header } from "../_components/header";
 import { Footer } from "../_components/footer";
 import { SavingsCalculator } from "./_components/savings-calculator";
+import { LearningReferences } from "../_components/learning-references";
 
 export async function generateMetadata({
   params,
@@ -39,6 +40,9 @@ export default async function SavingsPage({ params }: PageProps<"/[lang]">) {
       <Header dict={dict} lang={lang} />
       <main className="flex-1 bg-gradient-to-b from-transparent via-black/[0.01] to-black/[0.02] dark:via-white/[0.01] dark:to-white/[0.02] py-12 px-4 sm:px-6 lg:px-8">
         <SavingsCalculator dict={dict} />
+        <div className="mx-auto max-w-6xl mt-8">
+          <LearningReferences featureId="menabung" lang={lang as any} />
+        </div>
       </main>
       <Footer dict={dict} />
     </div>

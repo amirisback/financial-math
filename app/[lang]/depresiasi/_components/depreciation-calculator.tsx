@@ -108,16 +108,27 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
                       {manualRate}% / tahun
                     </span>
                   </div>
-                  <input
-                    id="manual-rate-input"
-                    type="range"
-                    min="1"
-                    max="50"
-                    step="1"
-                    value={manualRate}
-                    onChange={(e) => setManualRate(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                  />
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <input
+                      id="manual-rate-input"
+                      type="range"
+                      min="1"
+                      max="50"
+                      step="1"
+                      value={manualRate}
+                      onChange={(e) => setManualRate(Number(e.target.value))}
+                      className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    />
+                    <input
+                      type="number"
+                      min="1"
+                      max="50"
+                      step="1"
+                      value={manualRate}
+                      onChange={(e) => setManualRate(Number(e.target.value))}
+                      className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    />
+                  </div>
                 </div>
               )}
 
@@ -131,16 +142,27 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
                     {formatIDR(price)}
                   </span>
                 </div>
-                <input
-                  id="price-input-dep"
-                  type="range"
-                  min="1000000"
-                  max="2000000000"
-                  step="5000000"
-                  value={price}
-                  onChange={(e) => setPrice(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="price-input-dep"
+                    type="range"
+                    min="1000000"
+                    max="2000000000"
+                    step="5000000"
+                    value={price}
+                    onChange={(e) => setPrice(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="1000000"
+                    max="2000000000"
+                    step="5000000"
+                    value={price}
+                    onChange={(e) => setPrice(Number(e.target.value))}
+                    className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>Rp1.000.000</span>
                   <span>Rp1.000.000.000</span>
@@ -158,16 +180,27 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
                     {lifeSpan} Tahun
                   </span>
                 </div>
-                <input
-                  id="lifespan-input"
-                  type="range"
-                  min="1"
-                  max="15"
-                  step="1"
-                  value={lifeSpan}
-                  onChange={(e) => setLifeSpan(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="lifespan-input"
+                    type="range"
+                    min="1"
+                    max="15"
+                    step="1"
+                    value={lifeSpan}
+                    onChange={(e) => setLifeSpan(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    max="15"
+                    step="1"
+                    value={lifeSpan}
+                    onChange={(e) => setLifeSpan(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>1 Tahun</span>
                   <span>8 Tahun</span>

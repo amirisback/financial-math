@@ -88,6 +88,75 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       color: "from-indigo-500/10 to-blue-500/5 hover:border-indigo-500/30",
     },
     {
+      id: "mobil",
+      href: `/${lang}/mobil`,
+      title: dict.mobil.title,
+      description: dict.mobil.description,
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="h-8 w-8 text-blue-500"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.129-1.125V14.25M3 14.25h18M3 14.25l1.44-4.8c.217-.722.88-1.2 1.632-1.2h11.856c.751 0 1.415.478 1.632 1.2l1.44 4.8M5.25 9.75V4.5a2.25 2.25 0 0 1 2.25-2.25h9a2.25 2.25 0 0 1 2.25 2.25v5.25"
+          />
+        </svg>
+      ),
+      color: "from-blue-500/10 to-cyan-500/5 hover:border-blue-500/30",
+    },
+    {
+      id: "motor",
+      href: `/${lang}/motor`,
+      title: dict.motor.title,
+      description: dict.motor.description,
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="h-8 w-8 text-violet-500"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9.75 17.25a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm11.25 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-13.5-3h9.75M16.5 10.5h-5.25L9.75 14.25m4.5-9H10.5m4.5 0v3.75m0-3.75h1.5a1.5 1.5 0 0 1 1.5 1.5v2.25m-7.5-3.75H9m1.5 0V7.5"
+          />
+        </svg>
+      ),
+      color: "from-violet-500/10 to-purple-500/5 hover:border-violet-500/30",
+    },
+    {
+      id: "saham-kripto-emas",
+      href: `/${lang}/saham-kripto-emas`,
+      title: dict.sahamKriptoEmas.title,
+      description: dict.sahamKriptoEmas.description,
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="h-8 w-8 text-amber-500"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-1.971-.659-1.171-.879-1.171-2.303 0-3.182 1.171-.879 3.07-.879 4.242 0L15 8.818M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      ),
+      color: "from-amber-500/10 to-yellow-500/5 hover:border-amber-500/30",
+    },
+    {
       id: "menabung",
       href: `/${lang}/menabung`,
       title: dict.menabung.title,
@@ -155,6 +224,29 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         </svg>
       ),
       color: "from-rose-500/10 to-red-500/5 hover:border-rose-500/30",
+    },
+    {
+      id: "forex",
+      href: `/${lang}/forex`,
+      title: dict.forex.title,
+      description: dict.forex.description,
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="h-8 w-8 text-indigo-500"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
+          />
+        </svg>
+      ),
+      color: "from-indigo-500/10 to-emerald-500/5 hover:border-indigo-500/30",
     },
   ];
 

@@ -89,16 +89,27 @@ export function SavingsCalculator({ dict }: SavingsCalculatorProps) {
                     {formatIDR(initial)}
                   </span>
                 </div>
-                <input
-                  id="initial-input"
-                  type="range"
-                  min="0"
-                  max="100000000"
-                  step="500000"
-                  value={initial}
-                  onChange={(e) => setInitial(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="initial-input"
+                    type="range"
+                    min="0"
+                    max="100000000"
+                    step="500000"
+                    value={initial}
+                    onChange={(e) => setInitial(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    max="100000000"
+                    step="500000"
+                    value={initial}
+                    onChange={(e) => setInitial(Number(e.target.value))}
+                    className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>Rp0</span>
                   <span>Rp50.000.000</span>
@@ -116,16 +127,27 @@ export function SavingsCalculator({ dict }: SavingsCalculatorProps) {
                     {formatIDR(monthly)} / bln
                   </span>
                 </div>
-                <input
-                  id="monthly-input"
-                  type="range"
-                  min="0"
-                  max="20000000"
-                  step="100000"
-                  value={monthly}
-                  onChange={(e) => setMonthly(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="monthly-input"
+                    type="range"
+                    min="0"
+                    max="20000000"
+                    step="100000"
+                    value={monthly}
+                    onChange={(e) => setMonthly(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    max="20000000"
+                    step="100000"
+                    value={monthly}
+                    onChange={(e) => setMonthly(Number(e.target.value))}
+                    className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>Rp0</span>
                   <span>Rp10.000.000</span>
@@ -143,16 +165,27 @@ export function SavingsCalculator({ dict }: SavingsCalculatorProps) {
                     {rate}%
                   </span>
                 </div>
-                <input
-                  id="rate-input"
-                  type="range"
-                  min="0.5"
-                  max="20"
-                  step="0.1"
-                  value={rate}
-                  onChange={(e) => setRate(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="rate-input"
+                    type="range"
+                    min="0.5"
+                    max="20"
+                    step="0.1"
+                    value={rate}
+                    onChange={(e) => setRate(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="0.5"
+                    max="20"
+                    step="0.1"
+                    value={rate}
+                    onChange={(e) => setRate(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>0.5%</span>
                   <span>10%</span>
@@ -170,16 +203,27 @@ export function SavingsCalculator({ dict }: SavingsCalculatorProps) {
                     {duration} {dict.depresiasi.lifeSpan}
                   </span>
                 </div>
-                <input
-                  id="duration-input"
-                  type="range"
-                  min="1"
-                  max="30"
-                  step="1"
-                  value={duration}
-                  onChange={(e) => setDuration(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="duration-input"
+                    type="range"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value={duration}
+                    onChange={(e) => setDuration(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value={duration}
+                    onChange={(e) => setDuration(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>1 Tahun</span>
                   <span>15 Tahun</span>
@@ -220,16 +264,27 @@ export function SavingsCalculator({ dict }: SavingsCalculatorProps) {
                     {formatIDR(adminFee)} / bln
                   </span>
                 </div>
-                <input
-                  id="admin-input"
-                  type="range"
-                  min="0"
-                  max="100000"
-                  step="5000"
-                  value={adminFee}
-                  onChange={(e) => setAdminFee(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="admin-input"
+                    type="range"
+                    min="0"
+                    max="100000"
+                    step="5000"
+                    value={adminFee}
+                    onChange={(e) => setAdminFee(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    max="100000"
+                    step="5000"
+                    value={adminFee}
+                    onChange={(e) => setAdminFee(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>

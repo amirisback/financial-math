@@ -93,16 +93,27 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     {formatIDR(hpp)}
                   </span>
                 </div>
-                <input
-                  id="hpp-input"
-                  type="range"
-                  min="1000"
-                  max="500000"
-                  step="500"
-                  value={hpp}
-                  onChange={(e) => setHpp(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="hpp-input"
+                    type="range"
+                    min="1000"
+                    max="500000"
+                    step="500"
+                    value={hpp}
+                    onChange={(e) => setHpp(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="1000"
+                    max="500000"
+                    step="500"
+                    value={hpp}
+                    onChange={(e) => setHpp(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>Rp1.000</span>
                   <span>Rp250.000</span>
@@ -121,16 +132,27 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     {formatIDR(opex)}
                   </span>
                 </div>
-                <input
-                  id="opex-input"
-                  type="range"
-                  min="0"
-                  max="50000000"
-                  step="100000"
-                  value={opex}
-                  onChange={(e) => setOpex(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="opex-input"
+                    type="range"
+                    min="0"
+                    max="50000000"
+                    step="100000"
+                    value={opex}
+                    onChange={(e) => setOpex(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    max="50000000"
+                    step="100000"
+                    value={opex}
+                    onChange={(e) => setOpex(Number(e.target.value))}
+                    className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>Rp0</span>
                   <span>Rp25.000.000</span>
@@ -149,16 +171,27 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     {volume} Unit
                   </span>
                 </div>
-                <input
-                  id="volume-input"
-                  type="range"
-                  min="10"
-                  max="10000"
-                  step="10"
-                  value={volume}
-                  onChange={(e) => setVolume(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="volume-input"
+                    type="range"
+                    min="10"
+                    max="10000"
+                    step="10"
+                    value={volume}
+                    onChange={(e) => setVolume(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="10"
+                    max="10000"
+                    step="10"
+                    value={volume}
+                    onChange={(e) => setVolume(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>10 unit</span>
                   <span>5.000 unit</span>
@@ -177,16 +210,27 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     {margin}%
                   </span>
                 </div>
-                <input
-                  id="margin-input"
-                  type="range"
-                  min="5"
-                  max="95"
-                  step="1"
-                  value={margin}
-                  onChange={(e) => setMargin(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <input
+                    id="margin-input"
+                    type="range"
+                    min="5"
+                    max="95"
+                    step="1"
+                    value={margin}
+                    onChange={(e) => setMargin(Number(e.target.value))}
+                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                  />
+                  <input
+                    type="number"
+                    min="5"
+                    max="95"
+                    step="1"
+                    value={margin}
+                    onChange={(e) => setMargin(Number(e.target.value))}
+                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
                 <div className="flex justify-between text-[10px] text-zinc-400">
                   <span>5%</span>
                   <span>50%</span>
