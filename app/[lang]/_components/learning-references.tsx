@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
+import Image from "next/image";
 
 export interface LearningReferencesProps {
   featureId:
@@ -158,7 +159,7 @@ const referencesData: Record<"id" | "en", Record<string, FeatureReferences>> = {
           title: "Sekolah Pasar Modal & Analisis Saham",
           source: "Bursa Efek Indonesia (IDX)",
           url: "https://www.idx.co.id",
-          description: "Materi belajar analisis teknikal & fundamental saham, hak dividen, dan keterbukaan informasi emiten.",
+          description: "Materi belajar analisis teknikikal & fundamental saham, hak dividen, dan keterbukaan informasi emiten.",
           isLocal: true,
         },
         {
@@ -618,113 +619,132 @@ export function LearningReferences({ featureId, lang }: LearningReferencesProps)
   if (!data) return null;
 
   return (
-    <Card className="border border-card-border bg-card-bg/60 shadow-lg backdrop-blur-md mt-8">
-      <CardHeader className="border-b border-card-border/40 pb-4">
-        <CardTitle className="text-lg sm:text-xl font-extrabold flex items-center gap-2.5 text-zinc-900 dark:text-white">
-          <span className="flex items-center justify-center h-8 w-8 rounded-lg bg-indigo-500/10 text-indigo-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-              />
-            </svg>
-          </span>
-          {data.title}
-        </CardTitle>
-        <CardDescription className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-          {data.description}
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className="flex flex-col gap-6 pt-5">
-        {/* Formula Section */}
-        <div className="flex flex-col gap-2.5 rounded-2xl bg-zinc-50/50 dark:bg-zinc-900/40 border border-card-border/40 p-4.5">
-          <h4 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-indigo-500 animate-pulse"></span>
-            {data.formulaTitle}
-          </h4>
-          <div className="relative overflow-x-auto rounded-xl bg-zinc-50 dark:bg-black/60 p-4 text-xs font-mono text-emerald-700 dark:text-emerald-400 border border-zinc-200 dark:border-zinc-800 shadow-inner">
-            <pre className="whitespace-pre-wrap leading-relaxed">{data.formula}</pre>
+    <Card className="border border-card-border bg-card-bg/60 shadow-lg backdrop-blur-md mt-8 overflow-hidden">
+      <div className="grid gap-6 lg:grid-cols-12">
+        {/* Left Column: Premium Flat Illustration */}
+        <div className="lg:col-span-4 flex items-center justify-center p-6 bg-zinc-50/40 dark:bg-white/[0.01] border-b lg:border-b-0 lg:border-r border-card-border/40">
+          <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-full lg:h-64 flex items-center justify-center group">
+            <Image
+              src={`/illustrations/${featureId}.png`}
+              alt={data.title}
+              width={256}
+              height={256}
+              className="object-contain drop-shadow-xl group-hover:scale-105 group-hover:rotate-1 transition-all duration-500"
+              priority
+            />
           </div>
-          <p className="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed italic">
-            {data.formulaExplanation}
-          </p>
         </div>
 
-        {/* References Links Section */}
-        <div className="flex flex-col gap-3">
-          <h4 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
-            {currentLang === "en" ? "📘 Trusted Educational Sources & Articles" : "📘 Sumber Belajar & Artikel Terpercaya"}
-          </h4>
+        {/* Right Column: Content */}
+        <div className="lg:col-span-8 flex flex-col justify-between">
+          <CardHeader className="border-b border-card-border/40 pb-4">
+            <CardTitle className="text-lg sm:text-xl font-extrabold flex items-center gap-2.5 text-zinc-900 dark:text-white">
+              <span className="flex items-center justify-center h-8 w-8 rounded-lg bg-indigo-500/10 text-indigo-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                  />
+                </svg>
+              </span>
+              {data.title}
+            </CardTitle>
+            <CardDescription className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+              {data.description}
+            </CardDescription>
+          </CardHeader>
 
-          <div className="grid gap-3.5 sm:grid-cols-2">
-            {data.refList.map((ref, idx) => (
-              <a
-                key={idx}
-                href={ref.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-col justify-between p-4.5 rounded-2xl border border-card-border/50 bg-black/[0.01] hover:bg-indigo-500/[0.02] dark:bg-white/[0.01] dark:hover:bg-indigo-500/[0.02] hover:border-indigo-500/20 transition-all duration-300 shadow-sm"
-              >
-                <div className="flex flex-col gap-2">
-                  {/* Source Tag Badge */}
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`inline-flex items-center rounded-md px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide border ${
-                        ref.isLocal
-                          ? "bg-red-500/5 text-red-600 border-red-500/10 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20"
-                          : "bg-indigo-500/5 text-indigo-600 border-indigo-500/10 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20"
-                      }`}
-                    >
-                      {ref.isLocal ? (currentLang === "en" ? "ID Tax / Law" : "Regulasi RI") : "Global"}
-                    </span>
-                    <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 group-hover:text-indigo-500 transition-colors">
-                      {ref.source}
-                    </span>
-                  </div>
+          <CardContent className="flex flex-col gap-6 pt-5 pb-6">
+            {/* Formula Section */}
+            <div className="flex flex-col gap-2.5 rounded-2xl bg-zinc-50/50 dark:bg-zinc-900/40 border border-card-border/40 p-4.5">
+              <h4 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                {data.formulaTitle}
+              </h4>
+              <div className="relative overflow-x-auto rounded-xl bg-zinc-50 dark:bg-black/60 p-4 text-xs font-mono text-emerald-700 dark:text-emerald-400 border border-zinc-200 dark:border-zinc-800 shadow-inner">
+                <pre className="whitespace-pre-wrap leading-relaxed">{data.formula}</pre>
+              </div>
+              <p className="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed italic">
+                {data.formulaExplanation}
+              </p>
+            </div>
 
-                  {/* Ref Title */}
-                  <h5 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">
-                    {ref.title}
-                  </h5>
+            {/* References Links Section */}
+            <div className="flex flex-col gap-3">
+              <h4 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
+                {currentLang === "en" ? "📘 Trusted Educational Sources & Articles" : "📘 Sumber Belajar & Artikel Terpercaya"}
+              </h4>
 
-                  {/* Ref Description */}
-                  <p className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 leading-normal">
-                    {ref.description}
-                  </p>
-                </div>
-
-                {/* External Link Indicator */}
-                <div className="mt-4.5 flex items-center justify-end text-[10px] font-extrabold text-indigo-500 dark:text-indigo-400 gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
-                  <span>{currentLang === "en" ? "Read Article" : "Baca Artikel"}</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}
-                    stroke="currentColor"
-                    className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              <div className="grid gap-3.5 sm:grid-cols-2">
+                {data.refList.map((ref, idx) => (
+                  <a
+                    key={idx}
+                    href={ref.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex flex-col justify-between p-4.5 rounded-2xl border border-card-border/50 bg-black/[0.01] hover:bg-indigo-500/[0.02] dark:bg-white/[0.01] dark:hover:bg-indigo-500/[0.02] hover:border-indigo-500/20 transition-all duration-300 shadow-sm"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                    />
-                  </svg>
-                </div>
-              </a>
-            ))}
-          </div>
+                    <div className="flex flex-col gap-2">
+                      {/* Source Tag Badge */}
+                      <div className="flex items-center justify-between">
+                        <span
+                          className={`inline-flex items-center rounded-md px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide border ${
+                            ref.isLocal
+                              ? "bg-red-500/5 text-red-600 border-red-500/10 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20"
+                              : "bg-indigo-500/5 text-indigo-600 border-indigo-500/10 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20"
+                          }`}
+                        >
+                          {ref.isLocal ? (currentLang === "en" ? "ID Tax / Law" : "Regulasi RI") : "Global"}
+                        </span>
+                        <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 group-hover:text-indigo-500 transition-colors">
+                          {ref.source}
+                        </span>
+                      </div>
+
+                      {/* Ref Title */}
+                      <h5 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">
+                        {ref.title}
+                      </h5>
+
+                      {/* Ref Description */}
+                      <p className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 leading-normal">
+                        {ref.description}
+                      </p>
+                    </div>
+
+                    {/* External Link Indicator */}
+                    <div className="mt-4.5 flex items-center justify-end text-[10px] font-extrabold text-indigo-500 dark:text-indigo-400 gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+                      <span>{currentLang === "en" ? "Read Article" : "Baca Artikel"}</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2.5}
+                        stroke="currentColor"
+                        className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                        />
+                      </svg>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </CardContent>
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }
