@@ -9,13 +9,14 @@
 | Key            | Value                                    |
 | -------------- | ---------------------------------------- |
 | **App Name**   | Amir App                                 |
-| **Framework**  | Next.js 16.2.6 (App Router)              |
-| **Language**   | TypeScript 6 (Strict Mode)               |
-| **Styling**    | Tailwind CSS v4.3                        |
-| **PWA**        | Serwist v9.5                             |
-| **Linting**    | ESLint v10 + eslint-config-next          |
+| **Framework**  | Next.js 16.3.0 (App Router)              |
+| **React**      | React 19.2.8                             |
+| **Language**   | TypeScript 6.0.3 (Strict Mode)           |
+| **Styling**    | Tailwind CSS v4.3.3                      |
+| **PWA**        | Serwist v9.5.12                          |
+| **Linting**    | ESLint v9.21.0 + eslint-config-next 16.3.0|
 | **Node**       | ≥ 18                                     |
-| **Package Mgr**| Bun                                      |
+| **Package Mgr**| Bun v1.3.14                              |
 
 ---
 
@@ -42,42 +43,50 @@
 
 ```
 Init-nextjs-app/
-├── app/                        # Next.js App Router
-│   ├── layout.tsx              # Root layout (minimal wrapper)
-│   ├── globals.css             # Global styles + Tailwind config
-│   ├── manifest.ts             # PWA manifest
-│   ├── sw.ts                   # Service Worker (Serwist)
-│   ├── favicon.ico
-│   └── [lang]/                 # 🌐 Dynamic locale segment
-│       ├── layout.tsx          # Locale-aware layout (html lang, metadata)
-│       ├── page.tsx            # Homepage (i18n)
-│       └── dictionaries.ts    # Dictionary loader (server-only)
-├── i18n/                       # i18n configuration
-│   └── config.ts              # Locale list & types
-├── lib/                        # Shared utilities
-│   └── seo.ts                 # SEO helpers
-├── dictionaries/               # Translation files
-│   ├── id.json                # 🇮🇩 Bahasa Indonesia (default)
-│   └── en.json                # 🇬🇧 English
-├── proxy.ts                    # Locale detection & redirect (replaces middleware)
-├── public/                     # Static assets
+├── src/                        # 📂 All source code disatukan di dalam src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── layout.tsx          # Root layout (html lang, metadata, ThemeProvider)
+│   │   ├── page.tsx            # Homepage (i18n)
+│   │   ├── globals.css         # Global styles + Tailwind config (@theme inline)
+│   │   ├── manifest.ts         # PWA manifest
+│   │   ├── sw.ts               # Service Worker (Serwist)
+│   │   ├── providers.tsx       # ThemeProvider wrapper (next-themes)
+│   │   ├── robots.ts           # Robots.txt generator
+│   │   ├── sitemap.ts          # Sitemap generator
+│   │   ├── favicon.ico
+│   │   ├── _components/        # App-wide UI components (LanguageSwitcher, ThemeSwitcher)
+│   │   └── demo-encryption/    # Demo Keamanan ID (page.tsx, DemoClient.tsx, actions.ts)
+│   ├── i18n/                   # i18n configuration
+│   │   └── config.ts          # Locale list & types
+│   ├── lib/                    # Shared utilities
+│   │   ├── crypto.ts          # Enkripsi & Dekripsi AES-256-GCM (server-only)
+│   │   ├── obfuscator.ts      # Penyamaran & Deobfuscation ID Sqids
+│   │   ├── dictionaries.ts    # Dictionary loader (server-only)
+│   │   ├── i18n-server.ts     # Cookie-based locale retriever (server-only)
+│   │   ├── i18n-actions.ts    # Server action for changing locale cookie
+│   │   └── seo.ts             # SEO helpers & JSON-LD
+│   ├── dictionaries/           # Translation files
+│   │   ├── id.json            # 🇮🇩 Bahasa Indonesia (default)
+│   │   └── en.json            # 🇺🇸 English
+│   └── proxy.ts                # Pass-through middleware proxy
+├── public/                     # Static assets & PWA icons
 ├── prompt_ai/                  # AI prompt templates (bukan source code)
 ├── .env                        # Common env (semua environment)
 ├── .env.development            # Dev-only env overrides
 ├── .env.production             # Prod-only env overrides
 ├── .env.example                # Template referensi (committed ke git)
-├── AGENTS.md                   # AI Agent rules (Next.js specific)
+├── AGENTS.md                   # AI Agent rules (Next.js & skill rules)
 ├── GUIDELINE.md                # 📌 File ini — project guidelines
 ├── next.config.ts              # Next.js configuration
 ├── tsconfig.json               # TypeScript config
-├── eslint.config.mjs           # ESLint config
-├── postcss.config.mjs          # PostCSS config (Tailwind)
+├── eslint.config.mjs           # ESLint config (ESLint v9)
+├── postcss.config.mjs          # PostCSS config (Tailwind CSS v4)
 └── package.json
 ```
 
 ### Konvensi Penamaan Folder Baru:
-- **Feature/Module** → `app/[lang]/(group)/feature-name/`
-- **Components** → `app/[lang]/_components/` atau co-locate
+- **Feature/Module** → `app/(group)/feature-name/`
+- **Components** → `app/_components/` atau co-locate
 - **Hooks** → `app/_hooks/` atau co-locate dengan feature
 - **Utils/Lib** → `lib/` di root
 - **Types** → `types/` di root atau co-locate
@@ -115,10 +124,10 @@ Init-nextjs-app/
 
 ```typescript
 // ✅ Benar
-import { SomeComponent } from "@/app/_components/some-component";
+import { LanguageSwitcher } from "@/app/_components/language-switcher";
 
 // ❌ Salah
-import { SomeComponent } from "../../../_components/some-component";
+import { LanguageSwitcher } from "../../../_components/language-switcher";
 ```
 
 ### React / Next.js
@@ -145,26 +154,43 @@ import { SomeComponent } from "../../../_components/some-component";
 
 ---
 
-## 6. Styling — Tailwind CSS v4
+## 6. Styling — Tailwind CSS v4 & Theming
 
 ### Setup yang sudah ada:
 - `globals.css` menggunakan `@import "tailwindcss"` (Tailwind v4 syntax)
-- CSS variables untuk theming (`--background`, `--foreground`)
-- `@theme inline` block untuk custom design tokens
-- Dark mode via `prefers-color-scheme`
+- `@variant dark (&:where(.dark, .dark *));` untuk class-based dark mode di Tailwind v4
+- Standard CSS variables & design tokens untuk `:root` (Light Theme) dan `.dark` (Dark Theme):
+  - `--background`, `--foreground`, `--card`, `--primary`, `--secondary`, `--muted`, `--accent`, `--border`, `--ring`, dll.
+- `@theme inline` block untuk memetakan token ke class Tailwind (`bg-background`, `text-foreground`, `bg-primary`, `border-border`, dll.)
+- `<ThemeProvider>` via `next-themes` (`attribute="class"`, `defaultTheme="system"`) untuk pengubahan tema tanpa FOUC
+- Komponen `ThemeSwitcher` (`src/app/_components/theme-switcher.tsx`) untuk memilih tema (Light ☀️, Dark 🌙, System 💻). **Catatan:** Kode dan fungsinya tetap dibuat, namun defaultnya di-hide / gone di UI utama sampai user meminta request show.
+
+### 🎨 Mandatory Skills untuk Styling & UI Design:
+Setiap pengerjaan UI, layout, komponen, dan styling **WAJIB** memanfaatkan & mengombinasikan skill-skill berikut:
+1. **`using-superpowers`** (`.agents/skills/using-superpowers`) — Digunakan sebelum eksekusi untuk memastikan workflow penemuan & pemanggilan skill dilakukan secara terstruktur.
+2. **`hallmark`** (`.agents/skills/hallmark`) — Anti-AI-slop design skill untuk variasi struktur UI/layout, komponen 8-state, microinteractions, responsivitas mobile-first, dan kualitas visual premium.
+3. **`ui-ux-pro-max`** (`.agents/skills/ui-ux-pro-max`) — Design intelligence & guidelines untuk pemilihan color palette, typography pairing, standar aksesibilitas (WCAG/contrast), touch targets, dan UX pre-delivery checklist.
+4. **`tailwind-design-system`** (`.agents/skills/tailwind-design-system`) — Membangun design tokens, variasi komponen, pola responsif, dan pengorganisasian Tailwind CSS v4 secara sistematis dan terstandar.
 
 ### Aturan:
 - **Gunakan Tailwind classes** — Hindari inline style
 - **Gunakan CSS variables** di `@theme inline` untuk custom values
-- **Dark mode** harus selalu di-support
+- **Dark mode** harus selalu di-support di semua komponen UI
 - **Responsive design** — Mobile-first approach (`sm:`, `md:`, `lg:`)
 - **JANGAN** install Tailwind plugins tanpa konfirmasi user
 
 ```css
 /* ✅ Tambah design token baru di globals.css */
+:root {
+  --custom-color: #ffffff;
+}
+
+.dark {
+  --custom-color: #000000;
+}
+
 @theme inline {
-  --color-primary: #your-color;
-  --color-background: var(--background);
+  --color-custom: var(--custom-color);
 }
 ```
 
@@ -173,9 +199,9 @@ import { SomeComponent } from "../../../_components/some-component";
 ## 7. PWA (Progressive Web App)
 
 ### Setup:
-- **Serwist v9** untuk Service Worker
-- `app/sw.ts` — Service Worker source
-- `app/manifest.ts` — Web App Manifest
+- **Serwist v9.5.12** untuk Service Worker
+- `src/app/sw.ts` — Service Worker source
+- `src/app/manifest.ts` — Web App Manifest
 - PWA di-disable saat development (`next.config.ts`)
 
 ### Aturan:
@@ -189,37 +215,35 @@ import { SomeComponent } from "../../../_components/some-component";
 ## 8. Internationalization (i18n)
 
 ### Arsitektur:
-Project ini menggunakan **native Next.js 16 i18n** dengan pattern:
-- **`[lang]` dynamic segment** — Semua route ada di `app/[lang]/`
-- **`proxy.ts`** — Menggantikan `middleware.ts` (deprecated di Next.js 16) untuk deteksi locale dan redirect
-- **Dictionary pattern** — JSON files untuk translations, loaded server-side
+Project ini menggunakan **Cookie & Localization-based i18n** tanpa meletakkan locale di URL path:
+- **Tanpa prefix routing (`[lang]`)** — URL tetap bersih (`/`, `/about`, `/demo-encryption`).
+- **Cookie `NEXT_LOCALE`** — Menyimpan preferensi bahasa pengguna (`id` atau `en`).
+- **`i18n-server.ts`** — Helper server-side untuk membaca cookie `NEXT_LOCALE` dan memuat dictionary terkait.
+- **`LanguageSwitcher`** — Komponen UI client untuk mengubah bahasa via Server Action `setLocaleAction()`. **Catatan:** Kode dan fungsinya tetap dibuat, namun defaultnya di-hide / gone di UI utama sampai user meminta request show.
 
 ### Locales:
 | Locale | Bahasa              | Default |
 | ------ | ------------------- | ------- |
 | `id`   | 🇮🇩 Bahasa Indonesia | ✅ Ya   |
-| `en`   | 🇬🇧 English          | ❌ Tidak|
+| `en`   | 🇺🇸 English          | ❌ Tidak|
 
 ### File Structure:
 ```
-i18n/config.ts            # Locale list & Locale type
-dictionaries/id.json       # Translations (ID)
-dictionaries/en.json       # Translations (EN)
-app/[lang]/dictionaries.ts # Dictionary loader (server-only)
-proxy.ts                   # Locale detection & redirect
+src/i18n/config.ts            # Locale list & Locale type
+src/dictionaries/id.json       # Translations (ID)
+src/dictionaries/en.json       # Translations (EN)
+src/lib/dictionaries.ts        # Dictionary loader (server-only)
+src/lib/i18n-server.ts        # Server locale & dictionary fetcher
+src/lib/i18n-actions.ts       # Server Action for setting locale cookie
+src/app/_components/language-switcher.tsx # UI Switcher Component
 ```
 
 ### Cara Menggunakan di Server Component:
 ```typescript
-import { notFound } from "next/navigation";
-import { getDictionary, hasLocale } from "./dictionaries";
+import { getCurrentDictionary } from "@/lib/i18n-server";
 
-export default async function Page({ params }: PageProps<"/[lang]">) {
-  const { lang } = await params;
-
-  if (!hasLocale(lang)) notFound();
-
-  const dict = await getDictionary(lang);
+export default async function Page() {
+  const { locale, dict } = await getCurrentDictionary();
 
   return <h1>{dict.home.title}</h1>;
 }
@@ -233,13 +257,11 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
 ### Cara Menambahkan Locale Baru:
 1. Update `i18n/config.ts` — tambahkan locale ke array `locales`
 2. Buat file `dictionaries/{locale}.json` dengan semua key yang sama
-3. Update `app/[lang]/dictionaries.ts` — tambahkan import baru
-4. Update `proxy.ts` matcher jika perlu
+3. Update `lib/dictionaries.ts` — tambahkan import baru
 
 ### ⚠️ Aturan i18n:
-- **Semua route HARUS** ada di bawah `app/[lang]/`
-- **Gunakan `PageProps<"/[lang]">`** dan `LayoutProps<"/[lang]">` untuk typing
-- **Selalu validasi locale** dengan `hasLocale()` + `notFound()`
+- **TIDAK PERLU** membuat folder `app/[lang]/`
+- **Gunakan `getCurrentDictionary()`** pada Server Components untuk mengambil `locale` dan `dict`
 - **Dictionary hanya di server** — gunakan `import "server-only"` 
 - **JANGAN** import dictionary di client component — pass translations sebagai props
 
@@ -308,6 +330,7 @@ style(ui): adjust header spacing
 | `bun run build`      | Build production bundle (dengan webpack)|
 | `bun start`          | Jalankan production server              |
 | `bun run lint`       | Jalankan ESLint                         |
+| `bun run cli`        | Jalankan CLI helper lokal               |
 | `bun install`        | Install semua dependencies              |
 | `bun add <pkg>`      | Tambah dependency baru                  |
 | `bun add -d <pkg>`   | Tambah dev dependency baru              |
@@ -341,10 +364,12 @@ style(ui): adjust header spacing
 7. **Tambahkan metadata** di setiap halaman baru
 8. **Update `.env.example`** jika menambah env variable baru
 9. **Tambahkan translations** di kedua locale file (`id.json` & `en.json`)
-10. **Buat semua route** di bawah `app/[lang]/`
+10. **Gunakan `getCurrentDictionary()`** dari `@/lib/i18n-server` di Server Component
 11. **Gunakan `next/image`** (`Image` component dari `next/image`) untuk semua gambar di component React/Next.js
 12. **Gunakan Flat Routing + SearchParams** saat membutuhkan ID atau state dari halaman/segmen sebelumnya.
-13. **⚠️ WAJIB HAPUS rute demo (`app/[lang]/demo-encryption/`)** saat mulai pengerjaan web riil agar rute demo ini tidak masuk ke build produksi.
+13. **⚠️ WAJIB HAPUS rute demo (`app/demo-encryption/`)** saat mulai pengerjaan web riil agar rute demo ini tidak masuk ke build produksi.
+14. **Default Hide/Gone Theme & Language Switcher** — Kode dan fungsi `ThemeSwitcher` dan `LanguageSwitcher` tetap dibuat dan disiapkan, tetapi defaultnya di-hide / gone di UI utama sampai user meminta request show.
+15. **Wajib Gunakan Skills Styling** — Untuk setiap pengerjaan UI, layout, dan CSS styling, AI agent HARUS meng-invoke dan mematuhi aturan dari **`using-superpowers`**, **`hallmark`**, **`ui-ux-pro-max`**, dan **`tailwind-design-system`**.
 
 ### ❌ JANGAN:
 1. **JANGAN** menggunakan `pages/` directory
@@ -356,12 +381,12 @@ style(ui): adjust header spacing
 7. **JANGAN** menggunakan `any` type
 8. **JANGAN** menulis CSS inline — gunakan Tailwind classes
 9. **JANGAN** hardcode string UI — gunakan dictionary i18n
-10. **JANGAN** menggunakan `middleware.ts` — sudah deprecated, gunakan `proxy.ts`
+10. **JANGAN** membuat dynamic route `[lang]` di URL
 11. **JANGAN** menggunakan tag HTML `<img>` biasa di component React/Next.js — selalu gunakan `next/image` untuk optimasi performa dan SEO
 12. **JANGAN menggunakan Nested Dynamic Routes** yang terlalu dalam.
 13. **JANGAN menggunakan Shared Layout & React Context** untuk sekadar membagikan parameter routing antar halaman.
+14. **JANGAN** menampilkan `ThemeSwitcher` dan `LanguageSwitcher` di UI utama secara default tanpa permintaan eksplisit dari user (tetap jaga kodenya agar siap digunakan kapan saja).
 
 ---
 
-> 📅 Last updated: 2026-05-27
-
+> 📅 Last updated: 2026-08-13
