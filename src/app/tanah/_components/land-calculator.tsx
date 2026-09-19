@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Dictionary } from "@/lib/dictionaries";
 import { Card, CardContent } from "@/app/_components/ui/card";
+import { ShareSummaryButton } from "@/app/_components/ui/share-summary-button";
 
 interface LandCalculatorProps {
   dict: Dictionary;
@@ -297,7 +298,7 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-foreground flex flex-col">
                     <span>{dict.tanah.nptkp}</span>
-                    <span className="text-[10px] font-normal text-zinc-400">{dict.tanah.nptkpDesc}</span>
+                    <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">{dict.tanah.nptkpDesc}</span>
                   </label>
                   <select
                     value={nptkp}
@@ -432,7 +433,7 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                 <div className="flex justify-between items-center">
                   <label htmlFor="seller-initial-price" className="text-sm font-semibold text-foreground flex flex-col">
                     <span>{dict.tanah.sellerInitialPrice}</span>
-                    <span className="text-[10px] font-normal text-zinc-400">{dict.tanah.sellerInitialPriceHelp}</span>
+                    <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">{dict.tanah.sellerInitialPriceHelp}</span>
                   </label>
                   <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
                     {formatIDR(sellerInitialPrice)}
@@ -500,7 +501,7 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                   <div className="flex justify-between items-center">
                     <label htmlFor="market-price-per-m2" className="text-sm font-semibold text-foreground flex flex-col">
                       <span>{dict.tanah.marketPricePerM2}</span>
-                      <span className="text-[10px] font-normal text-zinc-400">{dict.tanah.marketPriceHelp}</span>
+                      <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">{dict.tanah.marketPriceHelp}</span>
                     </label>
                     <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
                       {formatIDR(marketPricePerM2)} / m²
@@ -533,7 +534,7 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                   <div className="flex justify-between items-center">
                     <label htmlFor="total-market-price" className="text-sm font-semibold text-foreground flex flex-col">
                       <span>{dict.tanah.totalMarketPrice}</span>
-                      <span className="text-[10px] font-normal text-zinc-400">{dict.tanah.marketPriceHelp}</span>
+                      <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">{dict.tanah.marketPriceHelp}</span>
                     </label>
                     <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
                       {formatIDR(totalMarketPriceKesepakatan)}
@@ -702,15 +703,15 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                           <span className="font-semibold text-rose-500">+{formatIDR(bankFees)}</span>
                         </div>
                         <div className="flex justify-between items-center text-xs">
-                          <span className="text-zinc-500">{dict.tanah.installment}</span>
+                          <span className="text-zinc-600 dark:text-zinc-400">{dict.tanah.installment}</span>
                           <span className="font-bold text-indigo-500">{formatIDR(installment)} / bln</span>
                         </div>
                         <div className="flex justify-between items-center">
                           <div className="flex flex-col">
-                            <span className="text-[10px] text-zinc-500">{dict.tanah.ratio}</span>
-                            <span className="text-[9px] text-zinc-400">{dict.tanah.ratioDesc}</span>
+                            <span className="text-xs text-zinc-700 dark:text-zinc-300 font-semibold">{dict.tanah.ratio}</span>
+                            <span className="text-xs text-zinc-500 dark:text-zinc-400">{dict.tanah.ratioDesc}</span>
                           </div>
-                          <span className="text-xs font-semibold text-amber-500 bg-amber-500/5 px-2 py-0.5 rounded border border-amber-500/10">
+                          <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/20">
                             {formatIDR(minIncome)}
                           </span>
                         </div>
@@ -718,10 +719,10 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                     )}
 
                     {/* Total acquisition cost card */}
-                    <div className="flex justify-between items-center p-3.5 rounded-xl bg-zinc-500/[0.03] dark:bg-white/[0.02] border border-card-border mt-1">
+                    <div className="flex justify-between items-center p-3.5 rounded-xl bg-zinc-500/[0.04] dark:bg-white/[0.03] border border-card-border mt-1">
                       <div className="flex flex-col">
                         <span className="text-xs font-bold text-foreground">{dict.tanah.totalAcquisitionCost}</span>
-                        <span className="text-[9px] text-zinc-400">{dict.tanah.totalAcquisitionCostDesc}</span>
+                        <span className="text-xs text-zinc-500 dark:text-zinc-400">{dict.tanah.totalAcquisitionCostDesc}</span>
                       </div>
                       <span className="text-sm font-extrabold text-foreground">{formatIDR(totalAcquisitionCost)}</span>
                     </div>
@@ -729,8 +730,8 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                     {/* Upfront Cash required */}
                     <div className="flex justify-between items-center p-3.5 rounded-xl bg-indigo-500/5 border border-indigo-500/10 mt-1">
                       <div className="flex flex-col">
-                        <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{dict.tanah.cashRequired}</span>
-                        <span className="text-[9px] text-zinc-400">{dict.tanah.cashRequiredDesc}</span>
+                        <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{dict.tanah.cashRequired}</span>
+                        <span className="text-xs text-zinc-500 dark:text-zinc-400">{dict.tanah.cashRequiredDesc}</span>
                       </div>
                       <span className="text-base font-extrabold text-indigo-600 dark:text-indigo-400">{formatIDR(cashRequiredPembeli)}</span>
                     </div>
@@ -738,11 +739,11 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                     {/* Valuation status */}
                     <div className="flex flex-col gap-2 border-t border-card-border/50 pt-3.5 mt-2">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="text-zinc-500">{dict.tanah.valuationStatus}</span>
-                        <span className={`px-2.5 py-0.5 rounded-full font-bold text-[10px] border ${
+                        <span className="text-zinc-600 dark:text-zinc-400">{dict.tanah.valuationStatus}</span>
+                        <span className={`px-2.5 py-1 rounded-full font-bold text-xs border ${
                           valuationBenefit >= 0
-                            ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
-                            : "bg-rose-500/10 text-rose-500 border-rose-500/20"
+                            ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
+                            : "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20"
                         }`}>
                           {valuationBenefit >= 0 ? dict.tanah.belowMarket : dict.tanah.aboveMarket}
                         </span>
@@ -752,15 +753,34 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                           ? "bg-emerald-500/[0.03] border-emerald-500/10"
                           : "bg-rose-500/[0.03] border-rose-500/10"
                       }`}>
-                        <span className="text-xs font-semibold text-zinc-500">
+                        <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-400">
                           {valuationBenefit >= 0 ? dict.tanah.valuationBenefit : dict.tanah.valuationLoss}
                         </span>
                         <span className={`text-sm font-bold ${
-                          valuationBenefit >= 0 ? "text-emerald-500" : "text-rose-500"
+                          valuationBenefit >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
                         }`}>
                           {valuationBenefit >= 0 ? "" : "-"}{formatIDR(Math.abs(valuationBenefit))}
                         </span>
                       </div>
+                    </div>
+
+                    {/* Share Summary Button - Buyer */}
+                    <div className="pt-2">
+                      <ShareSummaryButton
+                        title={`Simulasi Beli Tanah (${area} m²)`}
+                        summaryText={
+                          `🏡 *Simulasi Pembelian Tanah (${statusPembeli === "cash" ? "Tunai / Cash" : "KPR / Pembiayaan Bank"})*\n` +
+                          `• Luas Tanah: ${area} m²\n` +
+                          `• Harga Kesepakatan: ${formatIDR(totalPrice)}\n` +
+                          `• BPHTB (Pajak Pembeli): ${formatIDR(bphtb)}\n` +
+                          `• Biaya AJB PPAT (0.5%): ${formatIDR(AJBBagi)}\n` +
+                          `• Biaya Balik Nama (BBN): ${formatIDR(bbnResmi)}\n` +
+                          (statusPembeli === "kpr" ? `• DP: ${formatIDR(dpAmount)} (${dpPercent}%)\n• Cicilan: ${formatIDR(installment)} / bln (${tenor} thn)\n` : "") +
+                          `---------------------------------\n` +
+                          `*Total Modal Diperlukan: ${formatIDR(totalAcquisitionCost)}*\n` +
+                          `*Dana Siap di Awal: ${formatIDR(cashRequiredPembeli)}*`
+                        }
+                      />
                     </div>
                   </div>
                 </div>
@@ -770,10 +790,10 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
               {activeTab === "seller" && (
                 <div className="flex flex-col gap-5 animate-in fade-in duration-200">
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                       {dict.tanah.sellerAnalysisTitle}
                     </h3>
-                    <p className="text-xs text-zinc-500">
+                    <p className="text-xs text-zinc-600 dark:text-zinc-400">
                       {dict.tanah.sellerSide}
                     </p>
                   </div>
@@ -781,18 +801,18 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                   <div className="flex flex-col gap-2.5">
                     {/* Basic Selling Price */}
                     <div className="flex justify-between items-center text-xs">
-                      <span className="text-zinc-500">{dict.tanah.totalPrice}</span>
+                      <span className="text-zinc-600 dark:text-zinc-400">{dict.tanah.totalPrice}</span>
                       <span className="font-semibold text-foreground">{formatIDR(totalPrice)}</span>
                     </div>
 
                     {/* Deductions */}
                     <div className="flex justify-between items-center text-xs">
-                      <span className="text-zinc-500">{dict.tanah.pph}</span>
+                      <span className="text-zinc-600 dark:text-zinc-400">{dict.tanah.pph}</span>
                       <span className="font-semibold text-rose-500">-{formatIDR(pphFinal)}</span>
                     </div>
                     <div className="flex justify-between items-center text-xs">
-                      <span className="text-zinc-500">
-                        {dict.tanah.notaris} <span className="text-[9px] text-zinc-400">{dict.tanah.notarisDesc}</span>
+                      <span className="text-zinc-600 dark:text-zinc-400">
+                        {dict.tanah.notaris} <span className="text-xs text-zinc-500 dark:text-zinc-400">{dict.tanah.notarisDesc}</span>
                       </span>
                       <span className="font-semibold text-rose-500">-{formatIDR(AJBBagi)}</span>
                     </div>
@@ -800,13 +820,13 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                     {/* Net Cash Received */}
                     <div className="flex justify-between items-center p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 mt-1">
                       <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">{dict.tanah.netReceived}</span>
-                      <span className="text-base font-extrabold text-emerald-500">{formatIDR(uangBersihPenjual)}</span>
+                      <span className="text-base font-extrabold text-emerald-600 dark:text-emerald-400">{formatIDR(uangBersihPenjual)}</span>
                     </div>
 
                     {/* Initial Price comparison */}
                     <div className="flex flex-col gap-2 border-t border-card-border/50 pt-3.5 mt-2">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="text-zinc-500">{dict.tanah.sellerInitialPrice}</span>
+                        <span className="text-zinc-600 dark:text-zinc-400">{dict.tanah.sellerInitialPrice}</span>
                         <span className="font-semibold text-foreground">{formatIDR(sellerInitialPrice)}</span>
                       </div>
                       
@@ -817,11 +837,11 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                           : "bg-rose-500/[0.03] border-rose-500/10"
                       }`}>
                         <div className="flex flex-col">
-                          <span className="text-xs font-semibold text-zinc-500">{dict.tanah.capitalGain}</span>
-                          <span className="text-[9px] text-zinc-400">{dict.tanah.capitalGainDesc}</span>
+                          <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-400">{dict.tanah.capitalGain}</span>
+                          <span className="text-xs text-zinc-500 dark:text-zinc-400">{dict.tanah.capitalGainDesc}</span>
                         </div>
                         <span className={`text-sm font-bold ${
-                          capitalGain >= 0 ? "text-emerald-500" : "text-rose-500"
+                          capitalGain >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
                         }`}>
                           {capitalGain >= 0 ? "+" : ""}{formatIDR(capitalGain)}
                         </span>
@@ -830,24 +850,41 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
                       {/* ROI & CAGR Grid */}
                       <div className="grid grid-cols-2 gap-3 mt-1">
                         <div className="p-3 rounded-xl border border-card-border bg-black/[0.01] dark:bg-white/[0.01]">
-                          <span className="block text-[10px] text-zinc-400 font-semibold uppercase">{dict.tanah.roi}</span>
+                          <span className="block text-xs text-zinc-500 dark:text-zinc-400 font-semibold uppercase">{dict.tanah.roi}</span>
                           <span className={`text-base font-extrabold block mt-0.5 ${
-                            capitalGain >= 0 ? "text-emerald-500" : "text-rose-500"
+                            capitalGain >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
                           }`}>
                             {roi.toFixed(1)}%
                           </span>
                         </div>
                         <div className="p-3 rounded-xl border border-card-border bg-black/[0.01] dark:bg-white/[0.01]">
                           <div className="flex flex-col">
-                            <span className="text-[10px] text-zinc-400 font-semibold uppercase">{dict.tanah.cagr}</span>
-                            <span className="text-[8px] text-zinc-500 -mt-0.5">{dict.tanah.cagrDesc}</span>
+                            <span className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold uppercase">{dict.tanah.cagr}</span>
+                            <span className="text-xs text-zinc-500 dark:text-zinc-400 -mt-0.5">{dict.tanah.cagrDesc}</span>
                           </div>
                           <span className={`text-base font-extrabold block mt-0.5 ${
-                            capitalGain >= 0 ? "text-emerald-500" : "text-rose-500"
+                            capitalGain >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
                           }`}>
                             {cagr.toFixed(1)}%
                           </span>
                         </div>
+                      </div>
+
+                      {/* Share Summary Button - Seller */}
+                      <div className="pt-2">
+                        <ShareSummaryButton
+                          title={`Simulasi Jual Tanah (${area} m²)`}
+                          summaryText={
+                            `🏡 *Simulasi Penjualan Tanah*\n` +
+                            `• Luas Tanah: ${area} m²\n` +
+                            `• Harga Jual Kesepakatan: ${formatIDR(totalPrice)}\n` +
+                            `• Pajak PPh Final (2.5%): ${formatIDR(pphFinal)}\n` +
+                            `• Biaya Notaris PPAT (0.5%): ${formatIDR(AJBBagi)}\n` +
+                            `---------------------------------\n` +
+                            `*Uang Bersih Diterima: ${formatIDR(uangBersihPenjual)}*\n` +
+                            `*Keuntungan Modal (Capital Gain): ${capitalGain >= 0 ? "+" : ""}${formatIDR(capitalGain)} (ROI: ${roi.toFixed(1)}%, CAGR: ${cagr.toFixed(1)}%)*`
+                          }
+                        />
                       </div>
                     </div>
                   </div>
@@ -965,17 +1002,17 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
 
                     {/* Visual bar chart comparing the three */}
                     <div className="flex flex-col gap-3.5 bg-black/[0.01] dark:bg-white/[0.01] p-4 rounded-xl border border-card-border mt-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
+                      <span className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block mb-1">
                         {dict.tanah.comparisonChart || "Grafik Komparasi"}
                       </span>
                       
                       {/* Deal price relative to market price */}
                       <div className="flex flex-col gap-1.5">
-                        <div className="flex justify-between text-[9px] font-bold text-zinc-400">
+                        <div className="flex justify-between text-xs font-bold text-zinc-600 dark:text-zinc-400">
                           <span>{dict.tanah.dealPrice}</span>
                           <span>{((totalPrice / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100).toFixed(0)}%</span>
                         </div>
-                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
+                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
                           <div 
                             className="bg-indigo-500 h-full rounded-full transition-all duration-500"
                             style={{ width: `${(totalPrice / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100}%` }}
@@ -985,11 +1022,11 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
 
                       {/* Market price relative to max */}
                       <div className="flex flex-col gap-1.5">
-                        <div className="flex justify-between text-[9px] font-bold text-zinc-400">
+                        <div className="flex justify-between text-xs font-bold text-zinc-600 dark:text-zinc-400">
                           <span>{dict.tanah.marketVal}</span>
                           <span>{((totalMarketPrice / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100).toFixed(0)}%</span>
                         </div>
-                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
+                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
                           <div 
                             className="bg-emerald-500 h-full rounded-full transition-all duration-500"
                             style={{ width: `${(totalMarketPrice / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100}%` }}
@@ -999,11 +1036,11 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
 
                       {/* NJOP relative to max */}
                       <div className="flex flex-col gap-1.5">
-                        <div className="flex justify-between text-[9px] font-bold text-zinc-400">
+                        <div className="flex justify-between text-xs font-bold text-zinc-600 dark:text-zinc-400">
                           <span>{dict.tanah.njopVal}</span>
                           <span>{((totalNjop / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100).toFixed(0)}%</span>
                         </div>
-                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
+                        <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
                           <div 
                             className="bg-zinc-400 h-full rounded-full transition-all duration-500"
                             style={{ width: `${(totalNjop / Math.max(totalPrice, totalMarketPrice, totalNjop)) * 100}%` }}
@@ -1014,7 +1051,7 @@ export function LandCalculator({ dict }: LandCalculatorProps) {
 
                     {/* NJOP tax calculation warning if transaction price is below NJOP */}
                     {totalPrice < totalNjop && (
-                      <div className="p-3.5 rounded-xl border border-amber-500/20 bg-amber-500/[0.03] text-[10px] text-amber-600 dark:text-amber-400 leading-relaxed flex gap-2">
+                      <div className="p-3.5 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] text-xs text-amber-700 dark:text-amber-300 leading-relaxed flex gap-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"

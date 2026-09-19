@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Dictionary } from "@/lib/dictionaries";
 import { Card, CardContent } from "@/app/_components/ui/card";
+import { ShareSummaryButton } from "@/app/_components/ui/share-summary-button";
 
 interface PricingCalculatorProps {
   dict: Dictionary;
@@ -107,10 +108,10 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     step="500"
                     value={hpp}
                     onChange={(e) => setHpp(Number(e.target.value))}
-                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full sm:w-32 px-3 py-2 text-center text-sm font-semibold rounded-xl border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all min-h-[44px]"
                   />
                 </div>
-                <div className="flex justify-between text-[10px] text-zinc-400">
+                <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
                   <span>Rp1.000</span>
                   <span>Rp250.000</span>
                   <span>Rp500.000</span>
@@ -122,7 +123,7 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                 <div className="flex justify-between items-center">
                   <label htmlFor="opex-input" className="text-sm font-semibold text-foreground flex flex-col">
                     <span>{dict.pricing.opex}</span>
-                    <span className="text-xs font-normal text-zinc-400 dark:text-zinc-500">{dict.pricing.opexHelp}</span>
+                    <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">{dict.pricing.opexHelp}</span>
                   </label>
                   <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
                     {formatIDR(opex)}
@@ -137,7 +138,7 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     step="100000"
                     value={opex}
                     onChange={(e) => setOpex(Number(e.target.value))}
-                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    className="flex-1 h-3 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
                   />
                   <input
                     type="number"
@@ -146,10 +147,10 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     step="100000"
                     value={opex}
                     onChange={(e) => setOpex(Number(e.target.value))}
-                    className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full sm:w-36 px-3 py-2 text-center text-sm font-semibold rounded-xl border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all min-h-[44px]"
                   />
                 </div>
-                <div className="flex justify-between text-[10px] text-zinc-400">
+                <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
                   <span>Rp0</span>
                   <span>Rp25.000.000</span>
                   <span>Rp50.000.000</span>
@@ -161,7 +162,7 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                 <div className="flex justify-between items-center">
                   <label htmlFor="volume-input" className="text-sm font-semibold text-foreground flex flex-col">
                     <span>{dict.pricing.volume}</span>
-                    <span className="text-xs font-normal text-zinc-400 dark:text-zinc-500">{dict.pricing.volumeHelp}</span>
+                    <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">{dict.pricing.volumeHelp}</span>
                   </label>
                   <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
                     {volume} Unit
@@ -176,7 +177,7 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     step="10"
                     value={volume}
                     onChange={(e) => setVolume(Number(e.target.value))}
-                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    className="flex-1 h-3 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
                   />
                   <input
                     type="number"
@@ -185,10 +186,10 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     step="10"
                     value={volume}
                     onChange={(e) => setVolume(Number(e.target.value))}
-                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full sm:w-32 px-3 py-2 text-center text-sm font-semibold rounded-xl border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all min-h-[44px]"
                   />
                 </div>
-                <div className="flex justify-between text-[10px] text-zinc-400">
+                <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
                   <span>10 unit</span>
                   <span>5.000 unit</span>
                   <span>10.000 unit</span>
@@ -200,7 +201,7 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                 <div className="flex justify-between items-center">
                   <label htmlFor="margin-input" className="text-sm font-semibold text-foreground flex flex-col">
                     <span>{dict.pricing.margin}</span>
-                    <span className="text-xs font-normal text-zinc-400 dark:text-zinc-500">{dict.pricing.marginHelp}</span>
+                    <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">{dict.pricing.marginHelp}</span>
                   </label>
                   <span className="text-base font-bold text-primary bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
                     {margin}%
@@ -215,7 +216,7 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     step="1"
                     value={margin}
                     onChange={(e) => setMargin(Number(e.target.value))}
-                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    className="flex-1 h-3 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
                   />
                   <input
                     type="number"
@@ -224,10 +225,10 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                     step="1"
                     value={margin}
                     onChange={(e) => setMargin(Number(e.target.value))}
-                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full sm:w-32 px-3 py-2 text-center text-sm font-semibold rounded-xl border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all min-h-[44px]"
                   />
                 </div>
-                <div className="flex justify-between text-[10px] text-zinc-400">
+                <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
                   <span>5%</span>
                   <span>50%</span>
                   <span>95%</span>
@@ -345,7 +346,7 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                 <span className="text-3xl sm:text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 tracking-tight animate-fade-in py-1">
                   {formatIDR(hargaPembulatan)}
                 </span>
-                <span className="text-[10px] text-zinc-400">
+                <span className="text-xs text-zinc-600 dark:text-zinc-400">
                   {dict.pricing.recPrice}: {formatIDR(hargaJual)}
                 </span>
               </div>
@@ -353,25 +354,25 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
               {/* Rincian Finansial Lainnya */}
               <div className="flex flex-col gap-3.5">
                 <div className="flex justify-between items-center py-2 border-b border-card-border/50">
-                  <span className="text-xs text-zinc-500">{dict.pricing.unitCost}</span>
+                  <span className="text-xs text-zinc-600 dark:text-zinc-400">{dict.pricing.unitCost}</span>
                   <span className="text-sm font-semibold">{formatIDR(totalBiayaPerUnit)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-card-border/50">
-                  <span className="text-xs text-zinc-500">Pajak per Unit</span>
+                  <span className="text-xs text-zinc-600 dark:text-zinc-400">Pajak per Unit</span>
                   <span className="text-sm font-semibold">{formatIDR(pajakPembulatanPerUnit)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-card-border/50">
                   <div className="flex flex-col">
-                    <span className="text-xs text-zinc-500">{dict.pricing.bep}</span>
-                    <span className="text-[10px] text-zinc-400">{dict.pricing.bepDesc}</span>
+                    <span className="text-xs text-zinc-700 dark:text-zinc-300 font-medium">{dict.pricing.bep}</span>
+                    <span className="text-xs text-zinc-500 dark:text-zinc-400">{dict.pricing.bepDesc}</span>
                   </div>
-                  <span className="text-base font-bold text-amber-500 bg-amber-500/5 px-2.5 py-1 rounded-lg border border-amber-500/10">
+                  <span className="text-base font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">
                     {bepUnit} Unit
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-xs text-zinc-500">{dict.pricing.profit}</span>
-                  <span className={`text-base font-bold ${profitBersih >= 0 ? "text-emerald-500" : "text-rose-500"}`}>
+                  <span className="text-xs text-zinc-700 dark:text-zinc-300 font-medium">{dict.pricing.profit}</span>
+                  <span className={`text-base font-bold ${profitBersih >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
                     {formatIDR(profitBersih)}
                   </span>
                 </div>
@@ -379,10 +380,10 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
 
               {/* BEP Visual Chart (Premium SVG Graphic) */}
               <div className="mt-2 flex flex-col gap-2">
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400">Visualisasi BEP vs Target</span>
+                <span className="text-xs uppercase tracking-wider font-bold text-zinc-600 dark:text-zinc-400">Visualisasi BEP vs Target</span>
                 <div className="relative pt-1">
                   <div className="flex mb-2 items-center justify-between text-xs">
-                    <div className="font-semibold text-amber-500">BEP ({bepUnit} U)</div>
+                    <div className="font-semibold text-amber-600 dark:text-amber-400">BEP ({bepUnit} U)</div>
                     <div className="text-right font-semibold text-primary">Target ({volume} U)</div>
                   </div>
                   <div className="overflow-hidden h-3 text-xs flex rounded-full bg-zinc-200 dark:bg-zinc-800 border border-card-border">
@@ -397,12 +398,30 @@ export function PricingCalculator({ dict }: PricingCalculatorProps) {
                       className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary/70 transition-all duration-500"
                     ></div>
                   </div>
-                  <div className="flex justify-between text-[9px] text-zinc-400 mt-1">
+                  <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400 mt-1">
                     <span>0 U</span>
                     {bepUnit > volume && <span className="text-rose-500 font-bold">BEP melebihi Target Jualan!</span>}
                     <span>{volume} U</span>
                   </div>
                 </div>
+              </div>
+
+              {/* Share Summary Button */}
+              <div className="pt-3">
+                <ShareSummaryButton
+                  title="Simulasi Penetapan Harga & BEP Jualan"
+                  summaryText={
+                    `📊 *Simulasi Penetapan Harga Jual & BEP*\n` +
+                    `• HPP Bahan per Unit: ${formatIDR(hpp)}\n` +
+                    `• Biaya Operasional Tetap: ${formatIDR(opex)} / bulan\n` +
+                    `• Target Volume: ${volume} unit / bulan\n` +
+                    `• Margin Keuntungan: ${margin}%\n` +
+                    `---------------------------------\n` +
+                    `*Rekomendasi Harga Jual: ${formatIDR(hargaPembulatan)} / unit*\n` +
+                    `*BEP (Titik Impas): ${bepUnit} unit*\n` +
+                    `*Estimasi Profit Bersih: ${formatIDR(profitBersih)} / bulan*`
+                  }
+                />
               </div>
             </CardContent>
           </Card>

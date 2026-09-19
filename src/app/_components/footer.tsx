@@ -23,7 +23,7 @@ export function Footer({ dict }: FooterProps) {
 
         {/* Legal Disclaimer */}
         <div className="text-center sm:text-right max-w-md">
-          <p className="text-[10px] text-zinc-400 dark:text-zinc-500 leading-normal">
+          <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
             Disclaimer: Perhitungan kalkulator ini bersifat edukatif dan simulasi finansial semata. Pengguna diharapkan melakukan konsultasi hukum, pajak, atau keuangan dengan profesional tersertifikasi sebelum mengambil keputusan bisnis/investasi riil.
           </p>
         </div>

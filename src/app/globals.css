@@ -8,7 +8,7 @@
   --card: #ffffff;
   --card-foreground: #09090b;
   --card-bg: rgba(255, 255, 255, 0.75);
-  --card-border: rgba(226, 232, 240, 0.85);
+  --card-border: rgba(203, 213, 225, 0.95);
   --popover: #ffffff;
   --popover-foreground: #09090b;
   --primary: #4f46e5;
@@ -17,7 +17,7 @@
   --secondary: #f4f4f5;
   --secondary-foreground: #18181b;
   --muted: #f4f4f5;
-  --muted-foreground: #71717a;
+  --muted-foreground: #52525b;
   --accent: #f4f4f5;
   --accent-foreground: #18181b;
   --destructive: #ef4444;
@@ -38,7 +38,7 @@
   --card: #121215;
   --card-foreground: #fafafa;
   --card-bg: rgba(18, 18, 22, 0.7);
-  --card-border: rgba(39, 39, 42, 0.8);
+  --card-border: rgba(63, 63, 70, 0.9);
   --popover: #09090b;
   --popover-foreground: #fafafa;
   --primary: #6366f1;
@@ -47,7 +47,7 @@
   --secondary: #27272a;
   --secondary-foreground: #fafafa;
   --muted: #27272a;
-  --muted-foreground: #a1a1aa;
+  --muted-foreground: #d4d4d8;
   --accent: #27272a;
   --accent-foreground: #fafafa;
   --destructive: #7f1d1d;
@@ -164,3 +164,31 @@ body {
 .pulse-glow {
   animation: pulseGlow 4s infinite ease-in-out;
 }
+
+/* Ergonomic Range Slider Thumb for 35++ (min 22px touch target) */
+input[type="range"]::-webkit-slider-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.15);
+}
+

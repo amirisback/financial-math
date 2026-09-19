@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Dictionary } from "@/lib/dictionaries";
 import { Card, CardContent } from "@/app/_components/ui/card";
+import { ShareSummaryButton } from "@/app/_components/ui/share-summary-button";
 
 interface DepreciationCalculatorProps {
   dict: Dictionary;
@@ -151,7 +152,7 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
                     step="5000000"
                     value={price}
                     onChange={(e) => setPrice(Number(e.target.value))}
-                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    className="flex-1 h-3 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
                   />
                   <input
                     type="number"
@@ -160,10 +161,10 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
                     step="5000000"
                     value={price}
                     onChange={(e) => setPrice(Number(e.target.value))}
-                    className="w-full sm:w-32 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full sm:w-36 px-3 py-2 text-center text-sm font-semibold rounded-xl border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all min-h-[44px]"
                   />
                 </div>
-                <div className="flex justify-between text-[10px] text-zinc-400">
+                <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
                   <span>Rp1.000.000</span>
                   <span>Rp1.000.000.000</span>
                   <span>Rp2.000.000.000</span>
@@ -189,7 +190,7 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
                     step="1"
                     value={lifeSpan}
                     onChange={(e) => setLifeSpan(Number(e.target.value))}
-                    className="flex-1 h-2 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
+                    className="flex-1 h-3 rounded-lg bg-zinc-200 dark:bg-zinc-800 accent-primary cursor-pointer"
                   />
                   <input
                     type="number"
@@ -198,10 +199,10 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
                     step="1"
                     value={lifeSpan}
                     onChange={(e) => setLifeSpan(Number(e.target.value))}
-                    className="w-full sm:w-28 px-3 py-1.5 text-center text-xs font-semibold rounded-lg border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full sm:w-32 px-3 py-2 text-center text-sm font-semibold rounded-xl border border-card-border bg-black/[0.02] dark:bg-white/[0.04] text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all min-h-[44px]"
                   />
                 </div>
-                <div className="flex justify-between text-[10px] text-zinc-400">
+                <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
                   <span>1 Tahun</span>
                   <span>8 Tahun</span>
                   <span>15 Tahun</span>
@@ -297,13 +298,13 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
               {/* Total Penyusutan & Biaya Kenyamanan */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1 p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-card-border">
-                  <span className="text-[10px] text-zinc-500">{dict.depresiasi.totalDep}</span>
+                  <span className="text-xs text-zinc-600 dark:text-zinc-400">{dict.depresiasi.totalDep}</span>
                   <span className="text-sm font-bold text-rose-500">{formatIDR(totalDepreciation)}</span>
                 </div>
                 <div className="flex flex-col gap-1 p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-card-border">
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-zinc-500">{dict.depresiasi.comfortFee}</span>
-                    <span className="text-[8px] text-zinc-400">{dict.depresiasi.comfortFeeDesc}</span>
+                    <span className="text-xs text-zinc-600 dark:text-zinc-400">{dict.depresiasi.comfortFee}</span>
+                    <span className="text-xs text-zinc-500 dark:text-zinc-400">{dict.depresiasi.comfortFeeDesc}</span>
                   </div>
                   <span className="text-sm font-bold text-primary">{formatIDR(comfortFeeMonthly)} / bln</span>
                 </div>
@@ -312,11 +313,11 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
               {/* Premium Visual SVG Decay Chart */}
               {records.length > 0 && (
                 <div className="mt-2 flex flex-col gap-2">
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400">
+                  <span className="text-xs uppercase tracking-wider font-bold text-zinc-600 dark:text-zinc-400">
                     {dict.depresiasi.chartTitle}
                   </span>
                   <div className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-card-border rounded-2xl p-4 flex justify-center items-center">
-                    <svg viewBox="0 0 300 120" className="w-full h-auto">
+                    <svg viewBox="0 0 300 130" className="w-full h-auto">
                       {/* Grid Lines */}
                       <line x1="20" y1="10" x2="280" y2="10" stroke="rgba(156,163,175,0.15)" strokeWidth="1" />
                       <line x1="20" y1="50" x2="280" y2="50" stroke="rgba(156,163,175,0.15)" strokeWidth="1" />
@@ -358,11 +359,11 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
                       })()}
 
                       {/* Year Labels */}
-                      <text x="20" y="112" fontSize="8" className="fill-zinc-400 font-sans" textAnchor="middle">Beli</text>
+                      <text x="20" y="118" fontSize="11" className="fill-zinc-600 dark:fill-zinc-400 font-sans font-medium" textAnchor="middle">Beli</text>
                       {records.map((r, idx) => {
                         const x = 20 + (idx / (records.length - 1)) * 260;
                         return (
-                          <text key={idx} x={x} y="112" fontSize="8" className="fill-zinc-400 font-sans" textAnchor="middle">
+                          <text key={idx} x={x} y="118" fontSize="11" className="fill-zinc-600 dark:fill-zinc-400 font-sans font-medium" textAnchor="middle">
                             Th {r.year}
                           </text>
                         );
@@ -374,29 +375,45 @@ export function DepreciationCalculator({ dict }: DepreciationCalculatorProps) {
 
               {/* Yearly breakdown table */}
               <div className="mt-2 flex flex-col gap-2">
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400">
+                <span className="text-xs uppercase tracking-wider font-bold text-zinc-600 dark:text-zinc-400">
                   {dict.depresiasi.tableTitle}
                 </span>
                 <div className="overflow-x-auto max-h-48 border border-card-border rounded-xl">
                   <table className="min-w-full text-left border-collapse text-xs">
-                    <thead className="bg-black/[0.02] dark:bg-white/[0.04] text-zinc-500 font-semibold sticky top-0">
+                    <thead className="bg-black/[0.02] dark:bg-white/[0.04] text-zinc-600 dark:text-zinc-400 font-semibold sticky top-0">
                       <tr>
-                        <th className="p-2 border-b border-card-border">{dict.depresiasi.year}</th>
-                        <th className="p-2 border-b border-card-border">{dict.depresiasi.depPercentage}</th>
-                        <th className="p-2 border-b border-card-border">{dict.depresiasi.resale}</th>
+                        <th className="p-2.5 border-b border-card-border">{dict.depresiasi.year}</th>
+                        <th className="p-2.5 border-b border-card-border">{dict.depresiasi.depPercentage}</th>
+                        <th className="p-2.5 border-b border-card-border">{dict.depresiasi.resale}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-card-border">
                       {records.map((rec) => (
                         <tr key={rec.year} className="hover:bg-black/[0.01] dark:hover:bg-white/[0.01]">
-                          <td className="p-2 font-medium text-foreground">Tahun {rec.year}</td>
-                          <td className="p-2 text-rose-500 font-medium">-{rec.depRate}%</td>
-                          <td className="p-2 font-semibold text-indigo-500">{formatIDR(rec.resaleValue)}</td>
+                          <td className="p-2.5 font-medium text-foreground">Tahun {rec.year}</td>
+                          <td className="p-2.5 text-rose-500 font-medium">-{rec.depRate}%</td>
+                          <td className="p-2.5 font-semibold text-indigo-500">{formatIDR(rec.resaleValue)}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
+              </div>
+
+              {/* Share Summary Button */}
+              <div className="pt-3">
+                <ShareSummaryButton
+                  title="Simulasi Depresiasi & Biaya Kenyamanan Aset"
+                  summaryText={
+                    `📉 *Simulasi Depresiasi & Biaya Kenyamanan Aset*\n` +
+                    `• Harga Pembelian Awal: ${formatIDR(price)}\n` +
+                    `• Masa Pakai: ${lifeSpan} Tahun\n` +
+                    `---------------------------------\n` +
+                    `*Estimasi Nilai Jual Akhir: ${formatIDR(resaleValueEnd)}*\n` +
+                    `*Total Penurunan Nilai: ${formatIDR(totalDepreciation)}*\n` +
+                    `*Biaya Kenyamanan Aset: ${formatIDR(comfortFeeMonthly)} / bulan*`
+                  }
+                />
               </div>
             </CardContent>
           </Card>
