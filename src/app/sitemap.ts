@@ -12,8 +12,12 @@ const staticRoutes = [
   "/menabung",
   "/investasi",
   "/depresiasi",
+  "/saham",
+  "/emas",
+  "/kripto",
   "/saham-kripto-emas",
   "/forex",
+  "/trader-hub",
   "/demo-encryption",
 ];
 
