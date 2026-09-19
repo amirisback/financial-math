@@ -86,6 +86,18 @@ export function Header({ dict, currentLocale }: HeaderProps) {
             {dict.nav.home}
           </Link>
           <Link
+            href="/trader-hub"
+            className="inline-flex items-center text-xs font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 py-1.5 px-3 rounded-full border border-amber-500/20 transition-all shadow-2xs"
+          >
+            🎯 Trader Hub
+          </Link>
+          <Link
+            href="/trader-bot"
+            className="inline-flex items-center text-xs font-bold text-primary bg-primary/10 hover:bg-primary/20 py-1.5 px-3 rounded-full border border-primary/20 transition-all shadow-2xs"
+          >
+            🤖 Trader Bot
+          </Link>
+          <Link
             href="/demo-encryption"
             className="hidden sm:inline-flex items-center text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 py-1.5 px-3 rounded-full border border-indigo-500/20 transition-all"
           >

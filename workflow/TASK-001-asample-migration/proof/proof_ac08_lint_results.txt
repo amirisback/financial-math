@@ -1,3 +1,0 @@
-$ bun run lint
-$ eslint
-# ESLint exited with code 0 (0 errors, 0 warnings). Clean code quality standards met.
